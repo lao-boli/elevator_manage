@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.hqu.elevatorManage.mapper.TrapOrderMapper">
+
+    <resultMap id="BaseResultMap" type="org.hqu.elevatorManage.domain.vo.TrapOrderVO">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="orderId" column="order_id" jdbcType="VARCHAR"/>
+        <result property="elevatorId" column="elevator_id" jdbcType="VARCHAR"/>
+        <result property="terminalId" column="terminal_id" jdbcType="VARCHAR"/>
+        <result property="reporterId" column="reporter_id" jdbcType="VARCHAR"/>
+        <result property="companyId" column="company_id" jdbcType="VARCHAR"/>
+        <result property="companyName" column="company_name" jdbcType="VARCHAR"/>
+        <result property="groupId" column="group_id" jdbcType="VARCHAR"/>
+        <result property="groupName" column="group_name" jdbcType="VARCHAR"/>
+        <result property="trapTime" column="trap_time" jdbcType="TIMESTAMP"/>
+        <result property="arriveTime" column="arrive_time" jdbcType="TIMESTAMP"/>
+        <result property="finishTime" column="finish_time" jdbcType="TIMESTAMP"/>
+        <result property="duration" column="duration" jdbcType="INTEGER"/>
+        <result property="misreport" column="is_misreport" jdbcType="BOOLEAN"/>
+        <result property="state" column="state" jdbcType="INTEGER"/>
+    </resultMap>
+    
+    <sql id="Base_Column_List">
+        t.id, t.order_id, t.elevator_id, t.terminal_id, t.reporter_id, t.company_id, t.company_name, t.group_id, t.group_name, t.trap_time, t.arrive_time, t.finish_time, t.duration, t.is_misreport, t.state
+    </sql>
+
+    <sql id="Ext_Column_List">
+        ,e.name AS elevator_name
+    </sql>
+
+    <select id="listTrapOrders" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        <include refid="Ext_Column_List"/>
+        FROM trap_order AS t
+        JOIN elevator AS e ON e.elevator_id = t.elevator_id
+        <where>
+            <if test="id != null">
+                AND t.id = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="orderId != null">
+                AND order_id = #{orderId,jdbcType=VARCHAR}
+            </if>
+            <if test="elevatorId != null">
+                AND t.elevator_id = #{elevatorId,jdbcType=VARCHAR}
+            </if>
+            <if test="terminalId != null">
+                AND t.terminal_id = #{terminalId,jdbcType=VARCHAR}
+            </if>
+            <if test="reporterId != null">
+                AND reporter_id = #{reporterId,jdbcType=INTEGER}
+            </if>
+            <if test="companyId != null">
+                AND company_id = #{companyId,jdbcType=INTEGER}
+            </if>
+            <if test="companyName != null">
+                AND company_name = #{companyName,jdbcType=VARCHAR}
+            </if>
+            <if test="groupId != null">
+                AND group_id = #{groupId,jdbcType=INTEGER}
+            </if>
+            <if test="groupName != null">
+                AND group_name = #{groupName,jdbcType=VARCHAR}
+            </if>
+            <if test="trapTime != null">
+                AND trap_time = #{trapTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="trapStartTime != null and trapEndTime != null">
+                AND trap_time &gt; #{trapStartTime,jdbcType=TIMESTAMP}
+                AND trap_time &lt; #{trapEndTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="arriveTime != null">
+                AND arrive_time = #{arriveTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="arriveStartTime != null and arriveEndTime != null">
+                AND arrive_time &gt; #{arriveStartTime,jdbcType=TIMESTAMP}
+                AND arrive_time &lt; #{arriveEndTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="finishTime != null">
+                AND finish_time = #{finishTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="finishStartTime != null and finishEndTime != null">
+                AND finish_time &gt; #{finishStartTime,jdbcType=TIMESTAMP}
+                AND finish_time &lt; #{finishEndTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="duration != null">
+                AND duration = #{duration,jdbcType=INTEGER}
+            </if>
+            <if test="misreport != null">
+                AND is_misreport = #{misreport,jdbcType=BOOLEAN}
+            </if>
+            <if test="state != null">
+                AND t.state = #{state,jdbcType=INTEGER}
+            </if>
+        </where>
+    </select>
+
+    <insert id="addTrapOrder" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO trap_order
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="orderId != null">order_id,</if>
+            <if test="elevatorId != null">elevator_id,</if>
+            <if test="terminalId != null">terminal_id,</if>
+            <if test="reporterId != null">reporter_id,</if>
+            <if test="companyId != null">company_id,</if>
+            <if test="companyName != null">company_name,</if>
+            <if test="groupId != null">group_id,</if>
+            <if test="groupName != null">group_name,</if>
+            <if test="trapTime != null">trap_time,</if>
+            <if test="arriveTime != null">arrive_time,</if>
+            <if test="finishTime != null">finish_time,</if>
+            <if test="duration != null">duration,</if>
+            <if test="misreport != null">is_misreport,</if>
+            <if test="state != null">state,</if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+           <if test="id != null">
+               #{id,jdbcType=INTEGER},
+           </if>
+           <if test="orderId != null">
+               #{orderId,jdbcType=VARCHAR},
+           </if>
+           <if test="elevatorId != null">
+               #{elevatorId,jdbcType=VARCHAR},
+           </if>
+           <if test="terminalId != null">
+               #{terminalId,jdbcType=VARCHAR},
+           </if>
+           <if test="reporterId != null">
+               #{reporterId,jdbcType=VARCHAR},
+           </if>
+           <if test="companyId != null">
+               #{companyId,jdbcType=VARCHAR},
+           </if>
+           <if test="companyName != null">
+               #{companyName,jdbcType=VARCHAR},
+           </if>
+           <if test="groupId != null">
+               #{groupId,jdbcType=VARCHAR},
+           </if>
+           <if test="groupName != null">
+               #{groupName,jdbcType=VARCHAR},
+           </if>
+           <if test="trapTime != null">
+               #{trapTime,jdbcType=TIMESTAMP},
+           </if>
+           <if test="arriveTime != null">
+               #{arriveTime,jdbcType=TIMESTAMP},
+           </if>
+           <if test="finishTime != null">
+               #{finishTime,jdbcType=TIMESTAMP},
+           </if>
+           <if test="duration != null">
+               #{duration,jdbcType=INTEGER},
+           </if>
+           <if test="misreport != null">
+               #{misreport,jdbcType=BOOLEAN},
+           </if>
+           <if test="state != null">
+               #{state,jdbcType=INTEGER},
+           </if>
+        </trim>
+    </insert>
+
+    <update id="updateTrapOrder">
+        UPDATE trap_order
+        <set>
+            <if test="orderId != null and orderId != ''">
+                order_id = #{orderId,jdbcType=VARCHAR},
+            </if>
+            <if test="elevatorId != null and elevatorId != ''">
+                elevator_id = #{elevatorId,jdbcType=VARCHAR},
+            </if>
+            <if test="terminalId != null and terminalId != ''">
+                terminal_id = #{terminalId,jdbcType=VARCHAR},
+            </if>
+            <if test="reporterId != null">
+                reporter_id = #{reporterId,jdbcType=VARCHAR},
+            </if>
+            <if test="companyId != null">
+                company_id = #{companyId,jdbcType=VARCHAR},
+            </if>
+            <if test="companyName != null and companyName != ''">
+                company_name = #{companyName,jdbcType=VARCHAR},
+            </if>
+            <if test="groupId != null">
+                group_id = #{groupId,jdbcType=VARCHAR},
+            </if>
+            <if test="groupName != null and groupName != ''">
+                group_name = #{groupName,jdbcType=VARCHAR},
+            </if>
+            <if test="trapTime != null">
+                trap_time = #{trapTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="arriveTime != null">
+                arrive_time = #{arriveTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="finishTime != null">
+                finish_time = #{finishTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="duration != null">
+                duration = #{duration,jdbcType=INTEGER},
+            </if>
+            <if test="misreport != null">
+                is_misreport = #{misreport,jdbcType=BOOLEAN},
+            </if>
+            <if test="state != null">
+                state = #{state,jdbcType=INTEGER},
+            </if>
+        </set>
+        WHERE id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <delete id="deleteTrapOrderById">
+        DELETE
+        FROM trap_order
+        WHERE order_id = #{id,jdbcType=VARCHAR}
+    </delete>
+
+</mapper>
+

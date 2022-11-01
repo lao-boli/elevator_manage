@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.hqu.elevatorManage.mapper.MaintainOrderMapper">
+
+    <resultMap id="BaseResultMap" type="org.hqu.elevatorManage.domain.vo.MaintainOrderVO">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="orderId" column="order_id" jdbcType="VARCHAR"/>
+        <result property="elevatorId" column="elevator_id" jdbcType="VARCHAR"/>
+        <result property="elevatorName" column="elevator_id" jdbcType="INTEGER"/>
+        <result property="registrationCode" column="registration_code" jdbcType="INTEGER"/>
+        <result property="installPosition" column="install_position" jdbcType="INTEGER"/>
+        <result property="terminalId" column="terminal_id" jdbcType="VARCHAR"/>
+        <result property="reporterId" column="reporter_id" jdbcType="INTEGER"/>
+        <result property="companyId" column="company_id" jdbcType="VARCHAR"/>
+        <result property="companyName" column="company_name" jdbcType="VARCHAR"/>
+        <result property="groupId" column="group_id" jdbcType="VARCHAR"/>
+        <result property="groupName" column="group_name" jdbcType="VARCHAR"/>
+        <result property="duration" column="duration" jdbcType="VARCHAR"/>
+        <result property="type" column="type" jdbcType="VARCHAR"/>
+        <result property="receiveTime" column="receive_time" jdbcType="TIMESTAMP"/>
+        <result property="finishTime" column="finish_time" jdbcType="TIMESTAMP"/>
+        <result property="planTime" column="plan_time" jdbcType="TIMESTAMP"/>
+        <result property="recipient" column="recipient" jdbcType="VARCHAR"/>
+        <result property="state" column="state" jdbcType="INTEGER"/>
+        <result property="received" column="is_received" jdbcType="BOOLEAN"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+    </resultMap>
+    
+    <sql id="Base_Column_List">
+        mo.id, mo.order_id, mo.elevator_id, mo.terminal_id, mo.reporter_id, mo.company_id, mo.company_name, mo.group_id, mo.group_name, mo.duration, mo.type, mo.receive_time, mo.finish_time, mo.plan_time, mo.recipient, mo.state, mo.is_received, mo.remark
+    </sql>
+
+    <sql id="Ext_Column_List">
+        ,e.name AS elevator_name,e.registration_code,e.install_position
+    </sql>
+
+    <select id="listMaintainOrders" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        <include refid="Ext_Column_List"/>
+        FROM maintain_order AS mo
+        JOIN elevator AS e ON e.elevator_id = mo.elevator_id
+        <where>
+            <if test="id != null">
+                AND mo.id = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="orderId != null">
+                AND order_id = #{orderId,jdbcType=VARCHAR}
+            </if>
+            <if test="elevatorId != null">
+                AND mo.elevator_id = #{elevatorId,jdbcType=VARCHAR}
+            </if>
+            <if test="terminalId != null">
+                AND mo.terminal_id = #{terminalId,jdbcType=VARCHAR}
+            </if>
+            <if test="reporterId != null">
+                AND reporter_id = #{reporterId,jdbcType=INTEGER}
+            </if>
+            <if test="companyId != null">
+                AND company_id = #{companyId,jdbcType=VARCHAR}
+            </if>
+            <if test="companyName != null">
+                AND company_name = #{companyName,jdbcType=VARCHAR}
+            </if>
+            <if test="groupId != null">
+                AND group_id = #{groupId,jdbcType=VARCHAR}
+            </if>
+            <if test="groupName != null">
+                AND group_name = #{groupName,jdbcType=VARCHAR}
+            </if>
+            <if test="duration != null">
+                AND duration = #{duration,jdbcType=VARCHAR}
+            </if>
+            <if test="type != null">
+                AND mo.type = #{type,jdbcType=VARCHAR}
+            </if>
+            <if test="receiveTime != null">
+                AND receive_time = #{receiveTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="receiveStartTime != null and receiveEndTime != null">
+                AND receive_time &gt; #{receiveStartTime,jdbcType=TIMESTAMP}
+                AND receive_time &lt; #{receiveEndTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="finishTime != null">
+                AND finish_time = #{finishTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="finishStartTime != null and finishEndTime != null">
+                AND finish_time &gt; #{finishStartTime,jdbcType=TIMESTAMP}
+                AND finish_time &lt; #{finishEndTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="planTime != null">
+                AND plan_time = #{planTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="planStartTime != null and planEndTime != null">
+                AND plan_time &gt; #{planStartTime,jdbcType=TIMESTAMP}
+                AND plan_time &lt; #{planEndTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="recipient != null">
+                AND recipient = #{recipient,jdbcType=VARCHAR}
+            </if>
+            <if test="state != null">
+                AND mo.state = #{state,jdbcType=INTEGER}
+            </if>
+            <if test="received != null">
+                AND is_received = #{received,jdbcType=BOOLEAN}
+            </if>
+            <if test="remark != null">
+                AND remark = #{remark,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+
+    <insert id="addMaintainOrder" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO maintain_order
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="orderId != null">order_id,</if>
+            <if test="elevatorId != null">elevator_id,</if>
+            <if test="terminalId != null">terminal_id,</if>
+            <if test="reporterId != null">reporter_id,</if>
+            <if test="companyId != null">company_id,</if>
+            <if test="companyName != null">company_name,</if>
+            <if test="groupId != null">group_id,</if>
+            <if test="groupName != null">group_name,</if>
+            <if test="duration != null">duration,</if>
+            <if test="type != null">type,</if>
+            <if test="receiveTime != null">receive_time,</if>
+            <if test="finishTime != null">finish_time,</if>
+            <if test="planTime != null">plan_time,</if>
+            <if test="recipient != null">recipient,</if>
+            <if test="state != null">state,</if>
+            <if test="received != null">is_received,</if>
+            <if test="remark != null">remark,</if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+           <if test="id != null">
+               #{id,jdbcType=INTEGER},
+           </if>
+           <if test="orderId != null">
+               #{orderId,jdbcType=VARCHAR},
+           </if>
+           <if test="elevatorId != null">
+               #{elevatorId,jdbcType=VARCHAR},
+           </if>
+           <if test="terminalId != null">
+               #{terminalId,jdbcType=VARCHAR},
+           </if>
+           <if test="reporterId != null">
+               #{reporterId,jdbcType=INTEGER},
+           </if>
+           <if test="companyId != null">
+               #{companyId,jdbcType=VARCHAR},
+           </if>
+           <if test="companyName != null">
+               #{companyName,jdbcType=VARCHAR},
+           </if>
+           <if test="groupId != null">
+               #{groupId,jdbcType=VARCHAR},
+           </if>
+           <if test="groupName != null">
+               #{groupName,jdbcType=VARCHAR},
+           </if>
+           <if test="duration != null">
+               #{duration,jdbcType=VARCHAR},
+           </if>
+           <if test="type != null">
+               #{type,jdbcType=VARCHAR},
+           </if>
+           <if test="receiveTime != null">
+               #{receiveTime,jdbcType=TIMESTAMP},
+           </if>
+           <if test="finishTime != null">
+               #{finishTime,jdbcType=TIMESTAMP},
+           </if>
+           <if test="planTime != null">
+               #{planTime,jdbcType=TIMESTAMP},
+           </if>
+           <if test="recipient != null">
+               #{recipient,jdbcType=VARCHAR},
+           </if>
+           <if test="state != null">
+               #{state,jdbcType=INTEGER},
+           </if>
+           <if test="received != null">
+               #{received,jdbcType=BOOLEAN},
+           </if>
+           <if test="remark != null">
+               #{remark,jdbcType=VARCHAR},
+           </if>
+        </trim>
+    </insert>
+
+    <update id="updateMaintainOrder">
+        UPDATE maintain_order
+        <set>
+            <if test="orderId != null and orderId != ''">
+                order_id = #{orderId,jdbcType=VARCHAR},
+            </if>
+            <if test="elevatorId != null and elevatorId != ''">
+                elevator_id = #{elevatorId,jdbcType=VARCHAR},
+            </if>
+            <if test="terminalId != null and terminalId != ''">
+                terminal_id = #{terminalId,jdbcType=VARCHAR},
+            </if>
+            <if test="reporterId != null">
+                reporter_id = #{reporterId,jdbcType=INTEGER},
+            </if>
+            <if test="companyId != null">
+                company_id = #{companyId,jdbcType=VARCHAR},
+            </if>
+            <if test="companyName != null and companyName != ''">
+                company_name = #{companyName,jdbcType=VARCHAR},
+            </if>
+            <if test="groupId != null">
+                group_id = #{groupId,jdbcType=VARCHAR},
+            </if>
+            <if test="groupName != null">
+                group_name = #{groupName,jdbcType=VARCHAR},
+            </if>
+            <if test="duration != null and duration != ''">
+                duration = #{duration,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="receiveTime != null">
+                receive_time = #{receiveTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="finishTime != null">
+                finish_time = #{finishTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="planTime != null">
+                plan_time = #{planTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="recipient != null and recipient != ''">
+                recipient = #{recipient,jdbcType=VARCHAR},
+            </if>
+            <if test="state != null">
+                state = #{state,jdbcType=INTEGER},
+            </if>
+            <if test="received != null">
+                is_received = #{received,jdbcType=BOOLEAN},
+            </if>
+            <if test="remark != null and remark != ''">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <delete id="deleteMaintainOrderById">
+        DELETE
+        FROM maintain_order
+        WHERE order_id = #{id,jdbcType=VARCHAR}
+    </delete>
+
+</mapper>
+

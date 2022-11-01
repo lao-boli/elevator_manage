@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.hqu.elevatorManage.mapper.AnnualInspectionOrderMapper">
+
+    <resultMap id="BaseResultMap" type="org.hqu.elevatorManage.domain.vo.AnnualInspectionOrderVO">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="orderId" column="order_id" jdbcType="VARCHAR"/>
+        <result property="elevatorId" column="elevator_id" jdbcType="VARCHAR"/>
+        <result property="companyId" column="company_id" jdbcType="VARCHAR"/>
+        <result property="companyName" column="company_name" jdbcType="VARCHAR"/>
+        <result property="groupId" column="group_id" jdbcType="VARCHAR"/>
+        <result property="groupName" column="group_name" jdbcType="VARCHAR"/>
+        <result property="type" column="type" jdbcType="INTEGER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="inspectionTime" column="inspection_time" jdbcType="TIMESTAMP"/>
+        <result property="finishTime" column="finish_time" jdbcType="TIMESTAMP"/>
+        <result property="confirmTime" column="confirm_time" jdbcType="TIMESTAMP"/>
+        <result property="state" column="state" jdbcType="INTEGER"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+    </resultMap>
+    
+    <sql id="Base_Column_List">
+        id, order_id, elevator_id, company_id, company_name, group_id, group_name, type, create_time, inspection_time, finish_time, confirm_time, state, remark        
+    </sql>
+    
+    <select id="listAnnualInspectionOrders" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM annual_inspection_order
+        <where>
+            <if test="id != null">
+                AND id = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="orderId != null">
+                AND order_id = #{orderId,jdbcType=VARCHAR}
+            </if>
+            <if test="elevatorId != null">
+                AND elevator_id = #{elevatorId,jdbcType=VARCHAR}
+            </if>
+            <if test="companyId != null">
+                AND company_id = #{companyId,jdbcType=VARCHAR}
+            </if>
+            <if test="companyName != null">
+                AND company_name = #{companyName,jdbcType=VARCHAR}
+            </if>
+            <if test="groupId != null">
+                AND group_id = #{groupId,jdbcType=VARCHAR}
+            </if>
+            <if test="groupName != null">
+                AND group_name = #{groupName,jdbcType=VARCHAR}
+            </if>
+            <if test="type != null">
+                AND type = #{type,jdbcType=INTEGER}
+            </if>
+            <if test="createTime != null">
+                AND create_time = #{createTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="inspectionTime != null">
+                AND inspection_time = #{inspectionTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="finishTime != null">
+                AND finish_time = #{finishTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="confirmTime != null">
+                AND confirm_time = #{confirmTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="state != null">
+                AND state = #{state,jdbcType=INTEGER}
+            </if>
+            <if test="remark != null">
+                AND remark = #{remark,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+
+    <insert id="addAnnualInspectionOrder" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO annual_inspection_order
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="orderId != null">order_id,</if>
+            <if test="elevatorId != null">elevator_id,</if>
+            <if test="companyId != null">company_id,</if>
+            <if test="companyName != null">company_name,</if>
+            <if test="groupId != null">group_id,</if>
+            <if test="groupName != null">group_name,</if>
+            <if test="type != null">type,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="inspectionTime != null">inspection_time,</if>
+            <if test="finishTime != null">finish_time,</if>
+            <if test="confirmTime != null">confirm_time,</if>
+            <if test="state != null">state,</if>
+            <if test="remark != null">remark,</if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+           <if test="id != null">
+               #{id,jdbcType=INTEGER},
+           </if>
+           <if test="orderId != null">
+               #{orderId,jdbcType=VARCHAR},
+           </if>
+           <if test="elevatorId != null">
+               #{elevatorId,jdbcType=VARCHAR},
+           </if>
+           <if test="companyId != null">
+               #{companyId,jdbcType=VARCHAR},
+           </if>
+           <if test="companyName != null">
+               #{companyName,jdbcType=VARCHAR},
+           </if>
+           <if test="groupId != null">
+               #{groupId,jdbcType=VARCHAR},
+           </if>
+           <if test="groupName != null">
+               #{groupName,jdbcType=VARCHAR},
+           </if>
+           <if test="type != null">
+               #{type,jdbcType=INTEGER},
+           </if>
+           <if test="createTime != null">
+               #{createTime,jdbcType=TIMESTAMP},
+           </if>
+           <if test="inspectionTime != null">
+               #{inspectionTime,jdbcType=TIMESTAMP},
+           </if>
+           <if test="finishTime != null">
+               #{finishTime,jdbcType=TIMESTAMP},
+           </if>
+           <if test="confirmTime != null">
+               #{confirmTime,jdbcType=TIMESTAMP},
+           </if>
+           <if test="state != null">
+               #{state,jdbcType=INTEGER},
+           </if>
+           <if test="remark != null">
+               #{remark,jdbcType=VARCHAR},
+           </if>
+        </trim>
+    </insert>
+
+    <update id="updateAnnualInspectionOrder">
+        UPDATE annual_inspection_order
+        <set>
+            <if test="orderId != null and orderId != ''">
+                order_id = #{orderId,jdbcType=VARCHAR},
+            </if>
+            <if test="elevatorId != null and elevatorId != ''">
+                elevator_id = #{elevatorId,jdbcType=VARCHAR},
+            </if>
+            <if test="companyId != null and companyId != ''">
+                company_id = #{companyId,jdbcType=VARCHAR},
+            </if>
+            <if test="companyName != null and companyName != ''">
+                company_name = #{companyName,jdbcType=VARCHAR},
+            </if>
+            <if test="groupId != null and groupId != ''">
+                group_id = #{groupId,jdbcType=VARCHAR},
+            </if>
+            <if test="groupName != null and groupName != ''">
+                group_name = #{groupName,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="inspectionTime != null">
+                inspection_time = #{inspectionTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="finishTime != null">
+                finish_time = #{finishTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="confirmTime != null">
+                confirm_time = #{confirmTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="state != null">
+                state = #{state,jdbcType=INTEGER},
+            </if>
+            <if test="remark != null and remark != ''">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <delete id="deleteAnnualInspectionOrderById">
+        DELETE
+        FROM annual_inspection_order
+        WHERE order_id = #{id,jdbcType=VARCHAR}
+    </delete>
+
+</mapper>
+

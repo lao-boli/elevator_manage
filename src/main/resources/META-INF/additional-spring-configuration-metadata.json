@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "websocket.port",
+      "type": "java.lang.Integer",
+      "description": "Description for websocket.port."
+    }
+  ] }

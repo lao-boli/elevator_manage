@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.hqu.elevatorManage.mapper.UserMapper">
+
+    <resultMap id="BaseResultMap" type="org.hqu.elevatorManage.domain.vo.UserVO">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="userId" column="user_id" jdbcType="VARCHAR"/>
+        <result property="username" column="username" jdbcType="VARCHAR"/>
+        <result property="nickName" column="nick_name" jdbcType="VARCHAR"/>
+        <result property="password" column="password" jdbcType="VARCHAR"/>
+        <result property="salt" column="salt" jdbcType="VARCHAR"/>
+        <result property="roleId" column="role_id" jdbcType="INTEGER"/>
+        <result property="avatar" column="avatar" jdbcType="VARCHAR"/>
+        <result property="email" column="email" jdbcType="VARCHAR"/>
+        <result property="gender" column="gender" jdbcType="INTEGER"/>
+        <result property="phone" column="phone" jdbcType="VARCHAR"/>
+        <result property="companyId" column="company_id" jdbcType="VARCHAR"/>
+        <result property="companyName" column="company_name" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="state" column="state" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <resultMap id="ResultMap" type="org.hqu.elevatorManage.domain.entity.User">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="userId" column="user_id" jdbcType="VARCHAR"/>
+        <result property="username" column="username" jdbcType="VARCHAR"/>
+        <result property="nickName" column="nick_name" jdbcType="VARCHAR"/>
+        <result property="password" column="password" jdbcType="VARCHAR"/>
+        <result property="salt" column="salt" jdbcType="VARCHAR"/>
+        <result property="roleId" column="role_id" jdbcType="INTEGER"/>
+        <result property="avatar" column="avatar" jdbcType="VARCHAR"/>
+        <result property="email" column="email" jdbcType="VARCHAR"/>
+        <result property="gender" column="gender" jdbcType="INTEGER"/>
+        <result property="phone" column="phone" jdbcType="VARCHAR"/>
+        <result property="companyId" column="company_id" jdbcType="VARCHAR"/>
+        <result property="companyName" column="company_name" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="state" column="state" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        u.id, u.user_id, u.username, u.nick_name, u.password, u.salt, u.role_id,
+        u.avatar, u.email, u.gender, u.phone, u.create_time, u.state,
+        u.company_id,c.name AS company_name
+
+    </sql>
+
+    <select id="getUserByUsername" resultMap="ResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM user AS u
+        JOIN company c ON c.company_id = u.company_id
+        WHERE
+        username = #{username,jdbcType=VARCHAR}
+    </select>
+
+    <select id="getUserByUserId" resultMap="ResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM user AS u
+        JOIN company c ON c.company_id = u.company_id
+        WHERE
+        user_id = #{userId,jdbcType=VARCHAR}
+    </select>
+
+    <select id="listUsers" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM user AS u
+        JOIN company c ON c.company_id = u.company_id
+        <where>
+            <if test="id != null">
+                AND u.id = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="userId != null">
+                AND user_id = #{userId,jdbcType=VARCHAR}
+            </if>
+            <if test="username != null">
+                AND username = #{username,jdbcType=VARCHAR}
+            </if>
+            <if test="nickName != null">
+                AND nick_name = #{nickName,jdbcType=VARCHAR}
+            </if>
+            <if test="password != null">
+                AND password = #{password,jdbcType=VARCHAR}
+            </if>
+            <if test="salt != null">
+                AND salt = #{salt,jdbcType=VARCHAR}
+            </if>
+            <if test="roleId != null">
+                AND role_id = #{roleId,jdbcType=INTEGER}
+            </if>
+            <if test="avatar != null">
+                AND avatar = #{avatar,jdbcType=VARCHAR}
+            </if>
+            <if test="email != null">
+                AND email = #{email,jdbcType=VARCHAR}
+            </if>
+            <if test="gender != null">
+                AND gender = #{gender,jdbcType=INTEGER}
+            </if>
+            <if test="phone != null">
+                AND phone = #{phone,jdbcType=VARCHAR}
+            </if>
+            <if test="companyId != null">
+                AND u.company_id = #{companyId,jdbcType=VARCHAR}
+            </if>
+            <if test="createTime != null">
+                AND create_time = #{createTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="state != null">
+                AND u.state = #{state,jdbcType=INTEGER}
+            </if>
+        </where>
+    </select>
+
+    <insert id="addUser" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="username != null">username,</if>
+            <if test="nickName != null">nick_name,</if>
+            <if test="password != null">password,</if>
+            <if test="salt != null">salt,</if>
+            <if test="roleId != null">role_id,</if>
+            <if test="avatar != null">avatar,</if>
+            <if test="email != null">email,</if>
+            <if test="gender != null">gender,</if>
+            <if test="phone != null">phone,</if>
+            <if test="companyId != null">company_id,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="state != null">state,</if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=VARCHAR},
+            </if>
+            <if test="username != null">
+                #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="nickName != null">
+                #{nickName,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="salt != null">
+                #{salt,jdbcType=VARCHAR},
+            </if>
+            <if test="roleId != null">
+                #{roleId,jdbcType=INTEGER},
+            </if>
+            <if test="avatar != null">
+                #{avatar,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="gender != null">
+                #{gender,jdbcType=INTEGER},
+            </if>
+            <if test="phone != null">
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="companyId != null">
+                #{companyId,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="state != null">
+                #{state,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateUser">
+        UPDATE user
+        <set>
+            <if test="userId != null and userId != ''">
+                user_id = #{userId,jdbcType=VARCHAR},
+            </if>
+            <if test="username != null and username != ''">
+                username = #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="nickName != null and nickName != ''">
+                nick_name = #{nickName,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null and password != ''">
+                password = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="salt != null and salt != ''">
+                salt = #{salt,jdbcType=VARCHAR},
+            </if>
+            <if test="roleId != null">
+                role_id = #{roleId,jdbcType=INTEGER},
+            </if>
+            <if test="avatar != null and avatar != ''">
+                avatar = #{avatar,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null and email != ''">
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="gender != null">
+                gender = #{gender,jdbcType=INTEGER},
+            </if>
+            <if test="phone != null and phone != ''">
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="companyId != null and companyId != ''">
+                company_id = #{companyId,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="state != null">
+                state = #{state,jdbcType=INTEGER},
+            </if>
+        </set>
+        WHERE id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="changePassword">
+        UPDATE user
+        <set>
+            password = #{newPassword,jdbcType=VARCHAR},
+            salt = #{salt,jdbcType=VARCHAR},
+        </set>
+        WHERE user_id = #{userId,jdbcType=VARCHAR}
+
+    </update>
+
+    <delete id="deleteUserById">
+        DELETE
+        FROM user
+        WHERE user_id = #{id,jdbcType=VARCHAR}
+    </delete>
+
+</mapper>
+
