@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.hqu.elevatorManage.mapper.AreaMapper">
+
+    <resultMap id="BaseResultMap" type="org.hqu.elevatorManage.domain.vo.AreaVO">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="areaId" column="area_id" jdbcType="VARCHAR"/>
+        <result property="provinceId" column="province_id" jdbcType="VARCHAR"/>
+        <result property="provinceName" column="province_name" jdbcType="VARCHAR"/>
+        <result property="cityId" column="city_id" jdbcType="VARCHAR"/>
+        <result property="cityName" column="city_name" jdbcType="VARCHAR"/>
+        <result property="districtId" column="district_id" jdbcType="VARCHAR"/>
+        <result property="districtName" column="district_name" jdbcType="VARCHAR"/>
+        <result property="townId" column="town_id" jdbcType="VARCHAR"/>
+        <result property="townName" column="town_name" jdbcType="VARCHAR"/>
+    </resultMap>
+    
+    <sql id="Base_Column_List">
+        id, area_id, province_id, province_name, city_id, city_name, district_id, district_name, town_id, town_name        
+    </sql>
+    
+    <select id="listAreas" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM area
+        <where>
+            <if test="id != null">
+                AND id = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="areaId != null">
+                AND area_id = #{areaId,jdbcType=VARCHAR}
+            </if>
+            <if test="provinceId != null">
+                AND province_id = #{provinceId,jdbcType=VARCHAR}
+            </if>
+            <if test="provinceName != null">
+                AND province_name = #{provinceName,jdbcType=VARCHAR}
+            </if>
+            <if test="cityId != null">
+                AND city_id = #{cityId,jdbcType=VARCHAR}
+            </if>
+            <if test="cityName != null">
+                AND city_name = #{cityName,jdbcType=VARCHAR}
+            </if>
+            <if test="districtId != null">
+                AND district_id = #{districtId,jdbcType=VARCHAR}
+            </if>
+            <if test="districtName != null">
+                AND district_name = #{districtName,jdbcType=VARCHAR}
+            </if>
+            <if test="townId != null">
+                AND town_id = #{townId,jdbcType=VARCHAR}
+            </if>
+            <if test="townName != null">
+                AND town_name = #{townName,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+
+    <insert id="addArea" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO area
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="areaId != null">area_id,</if>
+            <if test="provinceId != null">province_id,</if>
+            <if test="provinceName != null">province_name,</if>
+            <if test="cityId != null">city_id,</if>
+            <if test="cityName != null">city_name,</if>
+            <if test="districtId != null">district_id,</if>
+            <if test="districtName != null">district_name,</if>
+            <if test="townId != null">town_id,</if>
+            <if test="townName != null">town_name,</if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+           <if test="id != null">
+               #{id,jdbcType=INTEGER},
+           </if>
+           <if test="areaId != null">
+               #{areaId,jdbcType=VARCHAR},
+           </if>
+           <if test="provinceId != null">
+               #{provinceId,jdbcType=VARCHAR},
+           </if>
+           <if test="provinceName != null">
+               #{provinceName,jdbcType=VARCHAR},
+           </if>
+           <if test="cityId != null">
+               #{cityId,jdbcType=VARCHAR},
+           </if>
+           <if test="cityName != null">
+               #{cityName,jdbcType=VARCHAR},
+           </if>
+           <if test="districtId != null">
+               #{districtId,jdbcType=VARCHAR},
+           </if>
+           <if test="districtName != null">
+               #{districtName,jdbcType=VARCHAR},
+           </if>
+           <if test="townId != null">
+               #{townId,jdbcType=VARCHAR},
+           </if>
+           <if test="townName != null">
+               #{townName,jdbcType=VARCHAR},
+           </if>
+        </trim>
+    </insert>
+
+    <update id="updateArea">
+        UPDATE area
+        <set>
+            <if test="areaId != null and areaId != ''">
+                area_id = #{areaId,jdbcType=VARCHAR},
+            </if>
+            <if test="provinceId != null and provinceId != ''">
+                province_id = #{provinceId,jdbcType=VARCHAR},
+            </if>
+            <if test="provinceName != null and provinceName != ''">
+                province_name = #{provinceName,jdbcType=VARCHAR},
+            </if>
+            <if test="cityId != null and cityId != ''">
+                city_id = #{cityId,jdbcType=VARCHAR},
+            </if>
+            <if test="cityName != null and cityName != ''">
+                city_name = #{cityName,jdbcType=VARCHAR},
+            </if>
+            <if test="districtId != null and districtId != ''">
+                district_id = #{districtId,jdbcType=VARCHAR},
+            </if>
+            <if test="districtName != null and districtName != ''">
+                district_name = #{districtName,jdbcType=VARCHAR},
+            </if>
+            <if test="townId != null and townId != ''">
+                town_id = #{townId,jdbcType=VARCHAR},
+            </if>
+            <if test="townName != null and townName != ''">
+                town_name = #{townName,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <delete id="deleteAreaById">
+        DELETE
+        FROM area
+        WHERE area_id = #{id,jdbcType=VARCHAR}
+    </delete>
+
+</mapper>
+
