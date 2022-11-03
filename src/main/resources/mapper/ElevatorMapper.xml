@@ -16,7 +16,7 @@
         <result property="layer" column="layer" jdbcType="VARCHAR"/>
         <result property="station" column="station" jdbcType="VARCHAR"/>
         <result property="terminalId" column="terminal_id" jdbcType="VARCHAR"/>
-        <result property="areaId" column="area_id" jdbcType="VARCHAR"/>
+        <result property="regionId" column="region_id" jdbcType="VARCHAR"/>
         <result property="state" column="state" jdbcType="INTEGER"/>
         <result property="usageArea" column="usage_area" jdbcType="VARCHAR"/>
         <result property="assetId" column="asset_id" jdbcType="VARCHAR"/>
@@ -50,19 +50,28 @@
         <result property="maintainGroupName" column="maintain_group_name" jdbcType="VARCHAR"/>
         <result property="repairCompanyName" column="repair_company_name" jdbcType="VARCHAR"/>
         <result property="repairGroupName" column="repair_group_name" jdbcType="VARCHAR"/>
+        <result property="provinceId" column="province_id" jdbcType="VARCHAR"/>
+        <result property="cityId" column="city_id" jdbcType="VARCHAR"/>
+        <result property="districtId" column="district_id" jdbcType="VARCHAR"/>
+        <result property="townId" column="town_id" jdbcType="VARCHAR"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id, elevator_id, name, install_position, usage_place, registration_code, install_company, brand, max_bearing, rated_load, layer, station, terminal_id, area_id, state, usage_area, asset_id, control_cabinet_type, control_cabinet_id, emergency_phone, safe_manager, driver, production_date, production_id, is_with_camera, is_with_screened_device, product_id, unit_id, maintain_group_id, repair_company_id, repair_group_id, rescue_phone, rescue_id, reform_company, agent, type, rated_speed, door_number, annual_inspection_date, install_date, product_date, reform_date, maintain_company_id, maintain_company_name, maintain_group_name, repair_company_name, repair_group_name
+        e.id, elevator_id, name, install_position, usage_place, registration_code, install_company, brand, max_bearing, rated_load, layer, station, terminal_id, e.region_id, state, usage_area, asset_id, control_cabinet_type, control_cabinet_id, emergency_phone, safe_manager, driver, production_date, production_id, is_with_camera, is_with_screened_device, product_id, unit_id, maintain_group_id, repair_company_id, repair_group_id, rescue_phone, rescue_id, reform_company, agent, type, rated_speed, door_number, annual_inspection_date, install_date, product_date, reform_date, maintain_company_id, maintain_company_name, maintain_group_name, repair_company_name, repair_group_name
+    </sql>
+    <sql id="Ext_Column_List">
+        , province_id, city_id, district_id , town_id
     </sql>
 
     <select id="listElevators" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List"/>
-        FROM elevator
+        <include refid="Ext_Column_List"/>
+        FROM elevator AS e
+        JOIN region r ON r.region_id = e.region_id
         <where>
             <if test="id != null">
-                AND id = #{id,jdbcType=INTEGER}
+                AND e.id = #{id,jdbcType=INTEGER}
             </if>
             <if test="elevatorId != null">
                 AND elevator_id = #{elevatorId,jdbcType=VARCHAR}
@@ -100,8 +109,8 @@
             <if test="terminalId != null">
                 AND terminal_id = #{terminalId,jdbcType=VARCHAR}
             </if>
-            <if test="areaId != null">
-                AND area_id = #{areaId,jdbcType=VARCHAR}
+            <if test="regionId != null">
+                AND e.region_id = #{regionId,jdbcType=VARCHAR}
             </if>
             <if test="state != null">
                 AND state = #{state,jdbcType=INTEGER}
@@ -202,6 +211,18 @@
             <if test="repairGroupName != null">
                 AND repair_group_name = #{repairGroupName,jdbcType=VARCHAR}
             </if>
+            <if test="provinceId != null and provinceId != ''">
+                AND province_id = #{provinceId,jdbcType=VARCHAR}
+            </if>
+            <if test="cityId != null and cityId != ''">
+                AND city_id = #{cityId,jdbcType=VARCHAR}
+            </if>
+            <if test="districtId != null and districtId != ''">
+                AND district_id = #{districtId,jdbcType=VARCHAR}
+            </if>
+            <if test="townId != null and townId !=''">
+                AND town_id = #{townId,jdbcType=VARCHAR}
+            </if>
         </where>
     </select>
 
@@ -221,7 +242,7 @@
             <if test="layer != null">layer,</if>
             <if test="station != null">station,</if>
             <if test="terminalId != null">terminal_id,</if>
-            <if test="areaId != null">area_id,</if>
+            <if test="tregionId != null">region_id,</if>
             <if test="state != null">state,</if>
             <if test="usageArea != null">usage_area,</if>
             <if test="assetId != null">asset_id,</if>
@@ -297,8 +318,8 @@
             <if test="terminalId != null">
                 #{terminalId,jdbcType=VARCHAR},
             </if>
-            <if test="areaId != null">
-                #{areaId,jdbcType=VARCHAR},
+            <if test="regionId != null">
+                #{regionId,jdbcType=VARCHAR},
             </if>
             <if test="state != null">
                 #{state,jdbcType=INTEGER},
@@ -441,8 +462,8 @@
             <if test="terminalId != null and terminalId != ''">
                 terminal_id = #{terminalId,jdbcType=VARCHAR},
             </if>
-            <if test="areaId != null and areaId != ''">
-                area_id = #{areaId,jdbcType=VARCHAR},
+            <if test="regionId != null and regionId != ''">
+                region_id = #{regionId,jdbcType=VARCHAR},
             </if>
             <if test="state != null">
                 state = #{state,jdbcType=INTEGER},

@@ -1,17 +1,11 @@
 package org.hqu.elevatorManage.domain.dto;
 
-import java.math.BigDecimal;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import org.hibernate.validator.constraints.Length;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Data;
 
 import java.io.Serializable;
-
-import lombok.Data;
+import java.math.BigDecimal;
 
 /**
  * [Unit]DTO
@@ -47,7 +41,7 @@ public class UnitDTO implements Serializable {
      * 所属行政区划id
      */
     @ApiModelProperty("所属行政区划id")
-    private String areaId;
+    private String regionId;
     
     /**
      * 省

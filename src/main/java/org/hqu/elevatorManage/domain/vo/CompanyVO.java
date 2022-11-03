@@ -1,28 +1,23 @@
 package org.hqu.elevatorManage.domain.vo;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import org.hibernate.validator.constraints.Length;
-import com.fasterxml.jackson.annotation.JsonFormat;
-
-import java.io.Serializable;
-
 import lombok.Data;
+
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 /**
  * [Company]VO
  *
  * @author hqully
- * @date 2022-10-19 20:17:51
+ * @date 2022-11-02 15:52:59
  */
 @ApiModel(description = "公司表")
 @Data
 public class CompanyVO implements Serializable {
 
-    private static final long serialVersionUID = -47334590360179781L;
+    private static final long serialVersionUID = 884285659784254105L;
     
     /**
      * 物理id
@@ -53,7 +48,7 @@ public class CompanyVO implements Serializable {
      * 公司分管区域代码
      */
     @ApiModelProperty("公司分管区域代码")
-    private String areaId;
+    private String regionId;
     
     /**
      * 公司状态
@@ -62,11 +57,53 @@ public class CompanyVO implements Serializable {
     private Integer state;
     
     /**
-     * 公司类型(1为维保公司，2为维修公司)
+     * 公司类型(维保公司/维修公司)
      */
-    @ApiModelProperty("公司类型(1为维保公司，2为维修公司)")
-    private Integer type;
+    @ApiModelProperty("公司类型(维保公司/维修公司)")
+    private String type;
     
+    /**
+     * 邮政编码
+     */
+    @ApiModelProperty("邮政编码")
+    private String postalCode;
+    
+    /**
+     * 联系方式
+     */
+    @ApiModelProperty("联系方式")
+    private String contactInfo;
+    
+    /**
+     * 负责人
+     */
+    @ApiModelProperty("负责人")
+    private String manager;
+
+    // for show
+    /**
+     * 省行政区划编号
+     */
+    @ApiModelProperty("省行政区划编号")
+    private String provinceId;
+
+    /**
+     * 市行政区划编号
+     */
+    @ApiModelProperty("市行政区划编号")
+    private String cityId;
+
+    /**
+     * 区/县行政区划编号
+     */
+    @ApiModelProperty("区/县行政区划编号")
+    private String districtId;
+
+    /**
+     * 乡/镇/街道行政区划编号
+     */
+    @ApiModelProperty("乡/镇/街道行政区划编号")
+    private String townId;
 
 }
 

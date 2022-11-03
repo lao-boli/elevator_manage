@@ -1,13 +1,13 @@
 package org.hqu.elevatorManage.mapper;
 
-import java.util.List;
-
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.hqu.elevatorManage.domain.entity.Elevator;
 import org.hqu.elevatorManage.domain.dto.ElevatorDTO;
+import org.hqu.elevatorManage.domain.entity.Elevator;
 import org.hqu.elevatorManage.domain.vo.ElevatorVO;
 import org.hqu.elevatorManage.domain.vo.StatisticsVO;
+
+import java.util.List;
 
 /**
  * <p>
@@ -34,6 +34,15 @@ public interface ElevatorMapper {
      */
     List<StatisticsVO> getBrandStatistics(@Param("unitId") String unitId, @Param("maintainCompanyId") String maintainCompanyId);
 
+    /**
+     * <p>
+     *     根据电梯的uuid获取电梯
+     * </p>
+     * @param elevatorId 电梯uuid
+     * @return {@link ElevatorVO}
+     * @date 2022-11-03 10:08:51 <br>
+     * @author hqully <br>
+     */
     ElevatorVO getElevatorByElevatorId(@Param("elevatorId") String elevatorId);
     /**
      * <p>

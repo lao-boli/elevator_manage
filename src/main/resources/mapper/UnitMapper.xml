@@ -6,7 +6,7 @@
         <result property="id" column="id" jdbcType="INTEGER"/>
         <result property="unitId" column="unit_id" jdbcType="VARCHAR"/>
         <result property="name" column="name" jdbcType="VARCHAR"/>
-        <result property="areaId" column="area_id" jdbcType="VARCHAR"/>
+        <result property="regionId" column="region_id" jdbcType="VARCHAR"/>
         <result property="province" column="province" jdbcType="VARCHAR"/>
         <result property="city" column="city" jdbcType="VARCHAR"/>
         <result property="district" column="district" jdbcType="VARCHAR"/>
@@ -17,7 +17,7 @@
     </resultMap>
     
     <sql id="Base_Column_List">
-        id, unit_id, name, area_id, province, city, district, street, address, lat, lng
+        id, unit_id, name, region_id, province, city, district, street, address, lat, lng
     </sql>
     
     <select id="listUnits" resultMap="BaseResultMap">
@@ -34,8 +34,8 @@
             <if test="name != null">
                 AND name = #{name,jdbcType=VARCHAR}
             </if>
-            <if test="areaId != null">
-                AND area_id = #{areaId,jdbcType=VARCHAR}
+            <if test="regionId != null">
+                AND region_id = #{regionId,jdbcType=VARCHAR}
             </if>
             <if test="province != null">
                 AND province = #{province,jdbcType=VARCHAR}
@@ -67,7 +67,7 @@
             <if test="id != null">id,</if>
             <if test="unitId != null">unit_id,</if>
             <if test="name != null">name,</if>
-            <if test="areaId != null">area_id,</if>
+            <if test="regionId != null">region_id,</if>
             <if test="province != null">province,</if>
             <if test="city != null">city,</if>
             <if test="district != null">district,</if>
@@ -87,8 +87,8 @@
            <if test="name != null">
                #{name,jdbcType=VARCHAR},
            </if>
-           <if test="areaId != null">
-               #{areaId,jdbcType=VARCHAR},
+           <if test="regionId != null">
+               #{regionId,jdbcType=VARCHAR},
            </if>
            <if test="province != null">
                #{province,jdbcType=VARCHAR},
@@ -123,8 +123,8 @@
             <if test="name != null and name != ''">
                 name = #{name,jdbcType=VARCHAR},
             </if>
-            <if test="areaId != null and areaId != ''">
-                area_id = #{areaId,jdbcType=VARCHAR},
+            <if test="regionId != null and regionId != ''">
+                region_id = #{regionId,jdbcType=VARCHAR},
             </if>
             <if test="province != null and province != ''">
                 province = #{province,jdbcType=VARCHAR},

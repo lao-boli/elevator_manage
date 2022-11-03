@@ -1,17 +1,12 @@
 package org.hqu.elevatorManage.domain.vo;
 
-import java.math.BigDecimal;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import org.hibernate.validator.constraints.Length;
-import com.fasterxml.jackson.annotation.JsonFormat;
-
-import java.io.Serializable;
-
 import lombok.Data;
+
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+import java.math.BigDecimal;
 
 /**
  * [Unit]VO
@@ -48,7 +43,7 @@ public class UnitVO implements Serializable {
      * 所属行政区划id
      */
     @ApiModelProperty("所属行政区划id")
-    private String areaId;
+    private String regionId;
     
     /**
      * 省

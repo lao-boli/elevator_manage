@@ -1,12 +1,12 @@
 package org.hqu.elevatorManage.mapper;
 
-import java.util.List;
-
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.hqu.elevatorManage.domain.entity.Company;
 import org.hqu.elevatorManage.domain.dto.CompanyDTO;
+import org.hqu.elevatorManage.domain.entity.Company;
 import org.hqu.elevatorManage.domain.vo.CompanyVO;
+
+import java.util.List;
 
 /**
  * <p>
@@ -31,7 +31,7 @@ public interface CompanyMapper {
      * @date 2022-10-19 20:17:51 <br>
      * @author hqully <br>
      */
-    List<CompanyVO> listCompanys(CompanyDTO companyDTO);
+    List<CompanyVO> listCompanies(CompanyDTO companyDTO);
 
     /**
      * <p>

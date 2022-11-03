@@ -1,21 +1,18 @@
 package org.hqu.elevatorManage.domain.entity;
 
-    
-    
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+import org.hibernate.validator.constraints.Length;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Date;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import org.hibernate.validator.constraints.Length;
-import com.fasterxml.jackson.annotation.JsonFormat;
-
-import java.io.Serializable;
-
-import lombok.Data;
 
 /**
  * [Elevator]实体类
@@ -114,7 +111,7 @@ public class Elevator implements Serializable {
      * 所在区域id
      */
     @ApiModelProperty("所在区域id")
-    private String areaId;
+    private String regionId;
     
     /**
      * 电梯状态

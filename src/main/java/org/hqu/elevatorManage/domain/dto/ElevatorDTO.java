@@ -1,19 +1,16 @@
 package org.hqu.elevatorManage.domain.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+import org.hibernate.validator.constraints.Length;
+import org.hqu.elevatorManage.domain.entity.Region;
+
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Date;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import org.hibernate.validator.constraints.Length;
-import com.fasterxml.jackson.annotation.JsonFormat;
-
-import java.io.Serializable;
-
-import lombok.Data;
 
 /**
  * [Elevator]DTO
@@ -110,7 +107,7 @@ public class ElevatorDTO implements Serializable {
      * 所在区域id
      */
     @ApiModelProperty("所在区域id")
-    private String areaId;
+    private String regionId;
     
     /**
      * 电梯状态
@@ -313,7 +310,37 @@ public class ElevatorDTO implements Serializable {
      */
     @ApiModelProperty("维修班组名称")
     private String repairGroupName;
-    
+
+    /**
+     * 电梯分管行政区划
+     */
+    @ApiModelProperty("电梯分管行政区划")
+    private Region region;
+
+    // for query
+    /**
+     * 省行政区划编号
+     */
+    @ApiModelProperty("省行政区划编号")
+    private String provinceId;
+
+    /**
+     * 市行政区划编号
+     */
+    @ApiModelProperty("市行政区划编号")
+    private String cityId;
+
+    /**
+     * 区/县行政区划编号
+     */
+    @ApiModelProperty("区/县行政区划编号")
+    private String districtId;
+
+    /**
+     * 乡/镇/街道行政区划编号
+     */
+    @ApiModelProperty("乡/镇/街道行政区划编号")
+    private String townId;
 
 }
 

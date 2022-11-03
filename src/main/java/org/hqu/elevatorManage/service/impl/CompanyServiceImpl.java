@@ -2,24 +2,26 @@ package org.hqu.elevatorManage.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import lombok.extern.slf4j.Slf4j;
 import org.hqu.elevatorManage.common.enums.ResultEnum;
 import org.hqu.elevatorManage.common.exception.DAOException;
 import org.hqu.elevatorManage.common.exception.ResultException;
-import org.hqu.elevatorManage.domain.entity.Company;
 import org.hqu.elevatorManage.domain.dto.CompanyDTO;
-import org.hqu.elevatorManage.domain.vo.CompanyVO;
 import org.hqu.elevatorManage.domain.dto.PageDTO;
-import org.hqu.elevatorManage.service.CompanyService;
+import org.hqu.elevatorManage.domain.entity.Company;
+import org.hqu.elevatorManage.domain.entity.Region;
+import org.hqu.elevatorManage.domain.vo.CompanyVO;
 import org.hqu.elevatorManage.mapper.CompanyMapper;
+import org.hqu.elevatorManage.mapper.RegionMapper;
+import org.hqu.elevatorManage.service.CompanyService;
 import org.hqu.elevatorManage.service.impl.constant.MapperConst;
-import lombok.extern.slf4j.Slf4j;
-
 import org.springframework.beans.BeanUtils;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * <p>
@@ -38,11 +40,14 @@ public class CompanyServiceImpl implements CompanyService {
     @Resource
     private CompanyMapper companyMapper;
 
+    @Resource
+    private RegionMapper regionMapper;
+
     @Override
     public PageInfo<CompanyVO> pageCompanies(PageDTO page, CompanyDTO companyDTO) {
         try {
             PageHelper.startPage(page);
-            List<CompanyVO> companyList = companyMapper.listCompanys(companyDTO);
+            List<CompanyVO> companyList = companyMapper.listCompanies(companyDTO);
             return new PageInfo<>(companyList);
         } catch (Exception e) {
             log.error("PAGE [company] FAIL\nINPUT OBJECT: {}\nREASON: {}", companyDTO, e.toString());
@@ -53,7 +58,7 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public List<CompanyVO> listCompanies(CompanyDTO companyDTO) {
         try {
-            return companyMapper.listCompanys(companyDTO);
+            return companyMapper.listCompanies(companyDTO);
         } catch (Exception e) {
             log.error("LIST [company] FAIL\nINPUT OBJECT: {}\nREASON: {}", companyDTO, e.toString());
             throw new ResultException(ResultEnum.ERROR, "查询公司列表失败");
@@ -64,6 +69,11 @@ public class CompanyServiceImpl implements CompanyService {
     public int addCompany(CompanyDTO companyDTO) {
         Company company = new Company();
         BeanUtils.copyProperties(companyDTO, company);
+        company.setCompanyId(UUID.randomUUID().toString());
+
+        Region region = companyDTO.getRegion();
+
+        handleRegion(company, region);
 
         int status;
         try {
@@ -78,10 +88,33 @@ public class CompanyServiceImpl implements CompanyService {
         return status;
     }
 
+    private void handleRegion(Company company, Region region) {
+        try {
+            // 数据库中的行政区
+            Region dbRegion = regionMapper.getRegionByTownId(region.getTownId());
+            // 不存在行政区则添加到数据库中
+            if(dbRegion == null){
+                String regionId = UUID.randomUUID().toString();
+                region.setRegionId(regionId);
+                regionMapper.addRegion(region);
+                company.setRegionId(regionId);
+            }else {
+                company.setRegionId(dbRegion.getRegionId());
+            }
+        } catch (Exception e) {
+            log.error("[REGION] FAIL\nINPUT OBJECT: {},{}\nREASON: {}", company,region, e.toString());
+            throw new ResultException(ResultEnum.ERROR, "行政区划错误");
+        }
+    }
+
     @Override
     public int updateCompany(CompanyDTO companyDTO) {
         Company company = new Company();
         BeanUtils.copyProperties(companyDTO, company);
+
+        Region region = companyDTO.getRegion();
+
+        handleRegion(company,region);
 
         int status;
         try {

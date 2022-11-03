@@ -2,19 +2,20 @@ package org.hqu.elevatorManage.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import lombok.extern.slf4j.Slf4j;
 import org.hqu.elevatorManage.common.enums.ResultEnum;
 import org.hqu.elevatorManage.common.exception.DAOException;
 import org.hqu.elevatorManage.common.exception.ResultException;
-import org.hqu.elevatorManage.domain.entity.Elevator;
 import org.hqu.elevatorManage.domain.dto.ElevatorDTO;
-import org.hqu.elevatorManage.domain.vo.ElevatorVO;
 import org.hqu.elevatorManage.domain.dto.PageDTO;
+import org.hqu.elevatorManage.domain.entity.Elevator;
+import org.hqu.elevatorManage.domain.entity.Region;
+import org.hqu.elevatorManage.domain.vo.ElevatorVO;
 import org.hqu.elevatorManage.domain.vo.StatisticsVO;
-import org.hqu.elevatorManage.service.ElevatorService;
 import org.hqu.elevatorManage.mapper.ElevatorMapper;
+import org.hqu.elevatorManage.mapper.RegionMapper;
+import org.hqu.elevatorManage.service.ElevatorService;
 import org.hqu.elevatorManage.service.impl.constant.MapperConst;
-import lombok.extern.slf4j.Slf4j;
-
 import org.springframework.beans.BeanUtils;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
@@ -40,6 +41,8 @@ public class ElevatorServiceImpl implements ElevatorService {
     @Resource
     private ElevatorMapper elevatorMapper;
 
+    @Resource
+    private RegionMapper regionMapper;
 
     @Override
     public List<StatisticsVO> getBrandStatistics(String unitId, String maintainCompanyId) {
@@ -79,6 +82,8 @@ public class ElevatorServiceImpl implements ElevatorService {
         BeanUtils.copyProperties(elevatorDTO, elevator);
 
         elevator.setElevatorId(UUID.randomUUID().toString());
+        Region region = elevatorDTO.getRegion();
+        handleRegion(elevator,region);
         int status;
         try {
             status = elevatorMapper.addElevator(elevator);
@@ -97,6 +102,8 @@ public class ElevatorServiceImpl implements ElevatorService {
         Elevator elevator = new Elevator();
         BeanUtils.copyProperties(elevatorDTO, elevator);
 
+        Region region = elevatorDTO.getRegion();
+        handleRegion(elevator,region);
         int status;
         try {
             status = elevatorMapper.updateElevator(elevator);
@@ -132,6 +139,24 @@ public class ElevatorServiceImpl implements ElevatorService {
         return status;
     }
 
+    private void handleRegion(Elevator elevator, Region region) {
+        try {
+            // 数据库中的行政区
+            Region dbRegion = regionMapper.getRegionByTownId(region.getTownId());
+            // 不存在行政区则添加到数据库中
+            if(dbRegion == null){
+                String regionId = UUID.randomUUID().toString();
+                region.setRegionId(regionId);
+                regionMapper.addRegion(region);
+                elevator.setRegionId(regionId);
+            }else {
+                elevator.setRegionId(dbRegion.getRegionId());
+            }
+        } catch (Exception e) {
+            log.error("[REGION] FAIL\nINPUT OBJECT: {},{}\nREASON: {}", elevator,region, e.toString());
+            throw new ResultException(ResultEnum.ERROR, "行政区划错误");
+        }
+    }
 }
 
 

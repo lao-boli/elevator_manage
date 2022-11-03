@@ -1,28 +1,23 @@
 package org.hqu.elevatorManage.domain.entity;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import org.hibernate.validator.constraints.Length;
-import com.fasterxml.jackson.annotation.JsonFormat;
-
-import java.io.Serializable;
-
 import lombok.Data;
+
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 /**
  * [Company]实体类
  *
  * @author hqully
- * @date 2022-10-19 20:17:51
+ * @date 2022-11-02 15:52:59
  */
 @ApiModel(description = "公司表")
 @Data
 public class Company implements Serializable {
 
-    private static final long serialVersionUID = -24388378334132030L;
+    private static final long serialVersionUID = 459356957026191630L;
     
     /**
      * 物理id
@@ -53,7 +48,7 @@ public class Company implements Serializable {
      * 公司分管区域代码
      */
     @ApiModelProperty("公司分管区域代码")
-    private String areaId;
+    private String regionId;
     
     /**
      * 公司状态
@@ -62,11 +57,30 @@ public class Company implements Serializable {
     private Integer state;
     
     /**
-     * 公司类型(1为维保公司，2为维修公司)
+     * 公司类型(维保公司/维修公司)
      */
-    @ApiModelProperty("公司类型(1为维保公司，2为维修公司)")
-    private Integer type;
+    @ApiModelProperty("公司类型(维保公司/维修公司)")
+    private String type;
     
+    /**
+     * 邮政编码
+     */
+    @ApiModelProperty("邮政编码")
+    private String postalCode;
+    
+    /**
+     * 联系方式
+     */
+    @ApiModelProperty("联系方式")
+    private String contactInfo;
+    
+    /**
+     * 负责人
+     */
+    @ApiModelProperty("负责人")
+    private String manager;
+
+
 
 }
 
