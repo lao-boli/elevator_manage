@@ -1,10 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.hqu.elevatorManage.mapper.AreaMapper">
+<mapper namespace="org.hqu.elevatorManage.mapper.RegionMapper">
 
-    <resultMap id="BaseResultMap" type="org.hqu.elevatorManage.domain.vo.AreaVO">
+    <resultMap id="BaseResultMap" type="org.hqu.elevatorManage.domain.vo.RegionVO">
         <result property="id" column="id" jdbcType="INTEGER"/>
-        <result property="areaId" column="area_id" jdbcType="VARCHAR"/>
+        <result property="regionId" column="region_id" jdbcType="VARCHAR"/>
+        <result property="provinceId" column="province_id" jdbcType="VARCHAR"/>
+        <result property="provinceName" column="province_name" jdbcType="VARCHAR"/>
+        <result property="cityId" column="city_id" jdbcType="VARCHAR"/>
+        <result property="cityName" column="city_name" jdbcType="VARCHAR"/>
+        <result property="districtId" column="district_id" jdbcType="VARCHAR"/>
+        <result property="districtName" column="district_name" jdbcType="VARCHAR"/>
+        <result property="townId" column="town_id" jdbcType="VARCHAR"/>
+        <result property="townName" column="town_name" jdbcType="VARCHAR"/>
+    </resultMap>
+    <resultMap id="entityMap" type="org.hqu.elevatorManage.domain.entity.Region">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="regionId" column="region_id" jdbcType="VARCHAR"/>
         <result property="provinceId" column="province_id" jdbcType="VARCHAR"/>
         <result property="provinceName" column="province_name" jdbcType="VARCHAR"/>
         <result property="cityId" column="city_id" jdbcType="VARCHAR"/>
@@ -16,19 +28,19 @@
     </resultMap>
     
     <sql id="Base_Column_List">
-        id, area_id, province_id, province_name, city_id, city_name, district_id, district_name, town_id, town_name        
+        id, region_id, province_id, province_name, city_id, city_name, district_id, district_name, town_id, town_name        
     </sql>
     
-    <select id="listAreas" resultMap="BaseResultMap">
+    <select id="listRegions" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List"/>
-        FROM area
+        FROM region
         <where>
             <if test="id != null">
                 AND id = #{id,jdbcType=INTEGER}
             </if>
-            <if test="areaId != null">
-                AND area_id = #{areaId,jdbcType=VARCHAR}
+            <if test="regionId != null">
+                AND region_id = #{regionId,jdbcType=VARCHAR}
             </if>
             <if test="provinceId != null">
                 AND province_id = #{provinceId,jdbcType=VARCHAR}
@@ -57,11 +69,11 @@
         </where>
     </select>
 
-    <insert id="addArea" keyProperty="id" useGeneratedKeys="true">
-        INSERT INTO area
+    <insert id="addRegion" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO region
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">id,</if>
-            <if test="areaId != null">area_id,</if>
+            <if test="regionId != null">region_id,</if>
             <if test="provinceId != null">province_id,</if>
             <if test="provinceName != null">province_name,</if>
             <if test="cityId != null">city_id,</if>
@@ -76,8 +88,8 @@
            <if test="id != null">
                #{id,jdbcType=INTEGER},
            </if>
-           <if test="areaId != null">
-               #{areaId,jdbcType=VARCHAR},
+           <if test="regionId != null">
+               #{regionId,jdbcType=VARCHAR},
            </if>
            <if test="provinceId != null">
                #{provinceId,jdbcType=VARCHAR},
@@ -106,11 +118,11 @@
         </trim>
     </insert>
 
-    <update id="updateArea">
-        UPDATE area
+    <update id="updateRegion">
+        UPDATE region
         <set>
-            <if test="areaId != null and areaId != ''">
-                area_id = #{areaId,jdbcType=VARCHAR},
+            <if test="regionId != null and regionId != ''">
+                region_id = #{regionId,jdbcType=VARCHAR},
             </if>
             <if test="provinceId != null and provinceId != ''">
                 province_id = #{provinceId,jdbcType=VARCHAR},
@@ -140,11 +152,17 @@
         WHERE id = #{id,jdbcType=INTEGER}
     </update>
 
-    <delete id="deleteAreaById">
+    <delete id="deleteRegionById">
         DELETE
-        FROM area
-        WHERE area_id = #{id,jdbcType=VARCHAR}
+        FROM region
+        WHERE region_id = #{id,jdbcType=VARCHAR}
     </delete>
-
+    <select id="getRegionByTownId" resultMap="entityMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM region
+        WHERE
+        town_id = #{townId,jdbcType=VARCHAR}
+    </select>
 </mapper>
 

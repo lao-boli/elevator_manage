@@ -1,28 +1,23 @@
 package org.hqu.elevatorManage.domain.entity;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import org.hibernate.validator.constraints.Length;
-import com.fasterxml.jackson.annotation.JsonFormat;
-
-import java.io.Serializable;
-
 import lombok.Data;
 
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+
 /**
- * [Area]实体类
+ * [Region]实体类
  *
  * @author hqully
- * @date 2022-11-02 15:48:27
+ * @date 2022-11-02 21:42:03
  */
 @ApiModel(description = "行政区域表")
 @Data
-public class Area implements Serializable {
+public class Region implements Serializable {
 
-    private static final long serialVersionUID = -69050361283110525L;
+    private static final long serialVersionUID = 620603008806497499L;
     
     /**
      * 物理id
@@ -36,7 +31,7 @@ public class Area implements Serializable {
      */
     @ApiModelProperty("所属行政区划id")
     @NotNull(message = "所属行政区划id不能为空")
-    private String areaId;
+    private String regionId;
     
     /**
      * 省行政区划编号
