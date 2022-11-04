@@ -19,6 +19,7 @@
         <result property="endTime" column="end_time" jdbcType="TIMESTAMP"/>
         <result property="type" column="type" jdbcType="VARCHAR"/>
         <result property="state" column="state" jdbcType="INTEGER"/>
+        <result property="unitName" column="unit_name" jdbcType="VARCHAR"/>
     </resultMap>
     
     <sql id="Base_Column_List">
@@ -26,6 +27,7 @@
     </sql>
     <sql id="Ext_Column_List">
         ,e.name AS elevator_name,e.registration_code,e.install_position
+        ,u.name AS unit_name
     </sql>
     
     <select id="listFaultRecords" resultMap="BaseResultMap">
@@ -34,6 +36,8 @@
         <include refid="Ext_Column_List"/>
         FROM fault_record AS fr
         JOIN elevator AS e ON e.elevator_id = fr.elevator_id
+        JOIN unit u ON e.unit_id = u.unit_id
+        JOIN region r ON r.region_id = e.region_id
         <where>
             <if test="id != null">
                 AND fr.id = #{id,jdbcType=INTEGER}
@@ -77,6 +81,18 @@
             </if>
             <if test="state != null">
                 AND fr.state = #{state,jdbcType=INTEGER}
+            </if>
+            <if test="provinceId != null and provinceId != ''">
+                AND province_id = #{provinceId,jdbcType=VARCHAR}
+            </if>
+            <if test="cityId != null and cityId != ''">
+                AND city_id = #{cityId,jdbcType=VARCHAR}
+            </if>
+            <if test="districtId != null and districtId != ''">
+                AND district_id = #{districtId,jdbcType=VARCHAR}
+            </if>
+            <if test="townId != null and townId !=''">
+                AND town_id = #{townId,jdbcType=VARCHAR}
             </if>
         </where>
     </select>

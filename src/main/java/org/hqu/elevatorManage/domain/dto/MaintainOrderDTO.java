@@ -1,17 +1,12 @@
 package org.hqu.elevatorManage.domain.dto;
 
-import java.time.LocalDateTime;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import org.hibernate.validator.constraints.Length;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Data;
 
 import java.io.Serializable;
-
-import lombok.Data;
+import java.time.LocalDateTime;
 
 /**
  * [MaintainOrder]DTO
@@ -180,5 +175,29 @@ public class MaintainOrderDTO implements Serializable {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private LocalDateTime planEndTime;
 
+    // for query
+    /**
+     * 省行政区划编号
+     */
+    @ApiModelProperty("省行政区划编号")
+    private String provinceId;
+
+    /**
+     * 市行政区划编号
+     */
+    @ApiModelProperty("市行政区划编号")
+    private String cityId;
+
+    /**
+     * 区/县行政区划编号
+     */
+    @ApiModelProperty("区/县行政区划编号")
+    private String districtId;
+
+    /**
+     * 乡/镇/街道行政区划编号
+     */
+    @ApiModelProperty("乡/镇/街道行政区划编号")
+    private String townId;
 }
 

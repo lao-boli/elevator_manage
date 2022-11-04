@@ -1,17 +1,15 @@
 package org.hqu.elevatorManage.domain.vo;
 
-import java.time.LocalDateTime;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import org.hibernate.validator.constraints.Length;
-import com.fasterxml.jackson.annotation.JsonFormat;
-
-import java.io.Serializable;
-
 import lombok.Data;
+import org.hibernate.validator.constraints.Length;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * [FaultRecord]VO
@@ -130,7 +128,12 @@ public class FaultRecordVO implements Serializable {
      */
     @ApiModelProperty("故障状态")
     private Integer state;
-    
+
+    /**
+     * 电梯所属单位名称
+     */
+    @ApiModelProperty("电梯所属单位名称")
+    private String unitName;
 
 }
 

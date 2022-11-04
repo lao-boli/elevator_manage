@@ -2,19 +2,18 @@ package org.hqu.elevatorManage.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import lombok.extern.slf4j.Slf4j;
 import org.hqu.elevatorManage.common.enums.ResultEnum;
 import org.hqu.elevatorManage.common.exception.DAOException;
 import org.hqu.elevatorManage.common.exception.ResultException;
-import org.hqu.elevatorManage.domain.entity.FaultRecord;
 import org.hqu.elevatorManage.domain.dto.FaultRecordDTO;
-import org.hqu.elevatorManage.domain.vo.FaultRecordVO;
 import org.hqu.elevatorManage.domain.dto.PageDTO;
+import org.hqu.elevatorManage.domain.entity.FaultRecord;
+import org.hqu.elevatorManage.domain.vo.FaultRecordVO;
 import org.hqu.elevatorManage.domain.vo.StatisticsVO;
-import org.hqu.elevatorManage.service.FaultRecordService;
 import org.hqu.elevatorManage.mapper.FaultRecordMapper;
+import org.hqu.elevatorManage.service.FaultRecordService;
 import org.hqu.elevatorManage.service.impl.constant.MapperConst;
-import lombok.extern.slf4j.Slf4j;
-
 import org.hqu.elevatorManage.utils.DAOUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.dao.DuplicateKeyException;
@@ -78,6 +77,7 @@ public class FaultRecordServiceImpl implements FaultRecordService {
         BeanUtils.copyProperties(faultRecordDTO, faultRecord);
 
         faultRecord.setRecordId(DAOUtil.generatePrimaryKey("F"));
+
         int status;
         try {
             status = faultRecordMapper.addFaultRecord(faultRecord);

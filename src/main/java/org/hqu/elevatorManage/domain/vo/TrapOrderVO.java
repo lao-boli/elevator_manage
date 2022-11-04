@@ -1,17 +1,15 @@
 package org.hqu.elevatorManage.domain.vo;
 
-import java.time.LocalDateTime;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import org.hibernate.validator.constraints.Length;
-import com.fasterxml.jackson.annotation.JsonFormat;
-
-import java.io.Serializable;
-
 import lombok.Data;
+import org.hibernate.validator.constraints.Length;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * [TrapOrder]VO
@@ -83,12 +81,30 @@ public class TrapOrderVO implements Serializable {
     private String groupName;
     
     /**
+     * 工单创建时间
+     */
+    @ApiModelProperty("工单创建时间")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private LocalDateTime createTime
+
+
+
+            ;
+
+    /**
      * 困人时间
      */
     @ApiModelProperty("困人时间")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private LocalDateTime trapTime;
-    
+
+    /**
+     * 领取时间
+     */
+    @ApiModelProperty("领取时间")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private LocalDateTime receiveTime;
+
     /**
      * 工作人员到达时间
      */
@@ -120,7 +136,31 @@ public class TrapOrderVO implements Serializable {
      */
     @ApiModelProperty("工单状态")
     private Integer state;
-    
+
+    // for show
+    /**
+     * 电梯名称
+     */
+    @ApiModelProperty("电梯名称")
+    private String elevatorName;
+
+    /**
+     * 电梯注册代码
+     */
+    @ApiModelProperty("电梯注册代码")
+    private String registrationCode;
+
+    /**
+     * 电梯安装位置
+     */
+    @ApiModelProperty("电梯安装位置")
+    private String installPosition;
+
+    /**
+     * 电梯所属单位名称
+     */
+    @ApiModelProperty("电梯所属单位名称")
+    private String unitName;
 
 }
 

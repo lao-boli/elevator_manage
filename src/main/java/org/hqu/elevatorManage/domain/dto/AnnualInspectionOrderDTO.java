@@ -1,17 +1,13 @@
 package org.hqu.elevatorManage.domain.dto;
 
-import java.time.LocalDateTime;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 import org.hibernate.validator.constraints.Length;
-import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.io.Serializable;
-
-import lombok.Data;
+import java.time.LocalDateTime;
 
 /**
  * [AnnualInspectionOrder]DTO
@@ -113,7 +109,101 @@ public class AnnualInspectionOrderDTO implements Serializable {
      */
     @ApiModelProperty("备注")
     private String remark;
-    
+
+    // for query
+    /**
+     * 省行政区划编号
+     */
+    @ApiModelProperty("省行政区划编号")
+    private String provinceId;
+
+    /**
+     * 市行政区划编号
+     */
+    @ApiModelProperty("市行政区划编号")
+    private String cityId;
+
+    /**
+     * 区/县行政区划编号
+     */
+    @ApiModelProperty("区/县行政区划编号")
+    private String districtId;
+
+    /**
+     * 乡/镇/街道行政区划编号
+     */
+    @ApiModelProperty("乡/镇/街道行政区划编号")
+    private String townId;
+
+    /**
+     * 工单创建时间区间开始
+     */
+    @ApiModelProperty("工单创建时间区间开始")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private LocalDateTime createStartTime;
+
+    /**
+     * 工单创建时间区间结束
+     */
+    @ApiModelProperty("工单创建时间区间结束")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private LocalDateTime createEndTime;
+
+    /**
+     * 年检时间区间开始
+     */
+    @ApiModelProperty("年检时间区间开始")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private LocalDateTime inspectionStartTime;
+
+    /**
+     * 年检时间区间结束
+     */
+    @ApiModelProperty("年检时间区间结束")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private LocalDateTime inspectionEndTime;
+
+    /**
+     * 领取时间区间开始
+     */
+    @ApiModelProperty("领取时间区间开始")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private LocalDateTime receiveStartTime;
+
+    /**
+     * 领取时间区间结束
+     */
+    @ApiModelProperty("领取时间区间结束")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private LocalDateTime receiveEndTime;
+
+    /**
+     * 救援结束时间区间开始
+     */
+    @ApiModelProperty("救援结束时间区间开始")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private LocalDateTime finishStartTime;
+
+    /**
+     * 救援结束时间区间结束
+     */
+    @ApiModelProperty("救援结束时间区间结束")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private LocalDateTime finishEndTime;
+
+    /**
+     * 确认时间区间开始
+     */
+    @ApiModelProperty("确认时间区间开始")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private LocalDateTime confirmStartTime;
+
+    /**
+     * 确认时间区间结束
+     */
+    @ApiModelProperty("确认时间区间结束")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private LocalDateTime confirmEndTime;
 
 }
 

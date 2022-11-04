@@ -1,17 +1,15 @@
 package org.hqu.elevatorManage.domain.vo;
 
-import java.time.LocalDateTime;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import org.hibernate.validator.constraints.Length;
-import com.fasterxml.jackson.annotation.JsonFormat;
-
-import java.io.Serializable;
-
 import lombok.Data;
+import org.hibernate.validator.constraints.Length;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * [RepairOrder]VO
@@ -117,7 +115,14 @@ public class RepairOrderVO implements Serializable {
      */
     @ApiModelProperty("故障类型")
     private String type;
-    
+
+    /**
+     * 工单创建时间
+     */
+    @ApiModelProperty("工单创建时间")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private LocalDateTime createTime;
+
     /**
      * 维修时间
      */
@@ -149,7 +154,14 @@ public class RepairOrderVO implements Serializable {
      */
     @ApiModelProperty("是否误报")
     private Boolean misreport;
-    
+
+    // for show
+
+    /**
+     * 电梯所属单位名称
+     */
+    @ApiModelProperty("电梯所属单位名称")
+    private String unitName;
 
 }
 

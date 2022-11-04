@@ -1,18 +1,14 @@
 package org.hqu.elevatorManage.domain.entity;
 
-    
-import java.time.LocalDateTime;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import org.hibernate.validator.constraints.Length;
-import com.fasterxml.jackson.annotation.JsonFormat;
-
-import java.io.Serializable;
-
 import lombok.Data;
+
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * [TrapOrder]实体类
@@ -81,14 +77,28 @@ public class TrapOrder implements Serializable {
      */
     @ApiModelProperty("维保班组名称(查询冗余)")
     private String groupName;
-    
+
+    /**
+     * 工单创建时间
+     */
+    @ApiModelProperty("工单创建时间")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private LocalDateTime createTime;
+
     /**
      * 困人时间
      */
     @ApiModelProperty("困人时间")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private LocalDateTime trapTime;
-    
+
+    /**
+     * 领取时间
+     */
+    @ApiModelProperty("领取时间")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private LocalDateTime receiveTime;
+
     /**
      * 工作人员到达时间
      */

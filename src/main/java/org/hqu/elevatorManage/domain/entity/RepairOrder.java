@@ -1,18 +1,14 @@
 package org.hqu.elevatorManage.domain.entity;
 
-    
-import java.time.LocalDateTime;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import org.hibernate.validator.constraints.Length;
-import com.fasterxml.jackson.annotation.JsonFormat;
-
-import java.io.Serializable;
-
 import lombok.Data;
+
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * [RepairOrder]实体类
@@ -99,7 +95,14 @@ public class RepairOrder implements Serializable {
      */
     @ApiModelProperty("故障类型")
     private String type;
-    
+
+    /**
+     * 工单创建时间
+     */
+    @ApiModelProperty("工单创建时间")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private LocalDateTime createTime;
+
     /**
      * 维修时间
      */

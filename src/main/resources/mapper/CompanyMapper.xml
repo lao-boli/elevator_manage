@@ -72,7 +72,6 @@
             <if test="districtId != null">
                 AND district_id = #{districtId,jdbcType=VARCHAR}
             </if>
-
             <if test="townId != null">
                 AND town_id = #{townId,jdbcType=VARCHAR}
             </if>

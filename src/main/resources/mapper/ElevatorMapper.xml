@@ -73,73 +73,70 @@
             <if test="id != null">
                 AND e.id = #{id,jdbcType=INTEGER}
             </if>
-            <if test="elevatorId != null">
+            <if test="elevatorId != null and elevatorId != ''">
                 AND elevator_id = #{elevatorId,jdbcType=VARCHAR}
             </if>
-            <if test="name != null">
+            <if test="name != null and name != ''">
                 AND name = #{name,jdbcType=VARCHAR}
             </if>
-            <if test="installPosition != null">
+            <if test="installPosition != null and installPosition != ''">
                 AND install_position = #{installPosition,jdbcType=VARCHAR}
             </if>
-            <if test="usagePlace != null">
+            <if test="usagePlace != null and usagePlace != ''">
                 AND usage_place = #{usagePlace,jdbcType=VARCHAR}
             </if>
-            <if test="registrationCode != null">
+            <if test="registrationCode != null and registrationCode != ''">
                 AND registration_code = #{registrationCode,jdbcType=VARCHAR}
             </if>
-            <if test="installCompany != null">
+            <if test="installCompany != null and installCompany != ''">
                 AND install_company = #{installCompany,jdbcType=VARCHAR}
             </if>
-            <if test="brand != null">
+            <if test="brand != null and brand != ''">
                 AND brand = #{brand,jdbcType=VARCHAR}
             </if>
-            <if test="maxBearing != null">
+            <if test="maxBearing != null and maxBearing != ''">
                 AND max_bearing = #{maxBearing,jdbcType=VARCHAR}
             </if>
-            <if test="ratedLoad != null">
+            <if test="ratedLoad != null and ratedLoad != ''">
                 AND rated_load = #{ratedLoad,jdbcType=VARCHAR}
             </if>
-            <if test="layer != null">
+            <if test="layer != null and layer != ''">
                 AND layer = #{layer,jdbcType=VARCHAR}
             </if>
-            <if test="station != null">
+            <if test="station != null and station != ''">
                 AND station = #{station,jdbcType=VARCHAR}
             </if>
-            <if test="terminalId != null">
+            <if test="terminalId != null and terminalId != ''">
                 AND terminal_id = #{terminalId,jdbcType=VARCHAR}
-            </if>
-            <if test="regionId != null">
-                AND e.region_id = #{regionId,jdbcType=VARCHAR}
             </if>
             <if test="state != null">
                 AND state = #{state,jdbcType=INTEGER}
             </if>
-            <if test="usageArea != null">
+            <if test="usageArea != null and usageArea != ''">
                 AND usage_area = #{usageArea,jdbcType=VARCHAR}
             </if>
-            <if test="assetId != null">
+            <if test="assetId != null and assetId != ''">
                 AND asset_id = #{assetId,jdbcType=VARCHAR}
             </if>
-            <if test="controlCabinetType != null">
+            <if test="controlCabinetType != null and controlCabinetType != ''">
                 AND control_cabinet_type = #{controlCabinetType,jdbcType=VARCHAR}
             </if>
-            <if test="controlCabinetId != null">
+            <if test="controlCabinetId != null and controlCabinetId != ''">
                 AND control_cabinet_id = #{controlCabinetId,jdbcType=VARCHAR}
             </if>
-            <if test="emergencyPhone != null">
+            <if test="emergencyPhone != null and emergencyPhone != ''">
                 AND emergency_phone = #{emergencyPhone,jdbcType=VARCHAR}
             </if>
-            <if test="safeManager != null">
+            <if test="safeManager != null and safeManager != ''">
                 AND safe_manager = #{safeManager,jdbcType=VARCHAR}
             </if>
-            <if test="driver != null">
+            <if test="driver != null and driver != ''">
                 AND driver = #{driver,jdbcType=VARCHAR}
             </if>
             <if test="productionDate != null">
                 AND production_date = #{productionDate,jdbcType=TIMESTAMP}
             </if>
-            <if test="productionId != null">
+            <if test="productionId != null and productionId != ''">
                 AND production_id = #{productionId,jdbcType=VARCHAR}
             </if>
             <if test="withCamera != null">
@@ -148,40 +145,40 @@
             <if test="withScreenedDevice != null">
                 AND is_with_screened_device = #{withScreenedDevice,jdbcType=BOOLEAN}
             </if>
-            <if test="productId != null">
+            <if test="productId != null and productId != ''">
                 AND product_id = #{productId,jdbcType=VARCHAR}
             </if>
-            <if test="unitId != null">
+            <if test="unitId != null and unitId != ''">
                 AND unit_id = #{unitId,jdbcType=VARCHAR}
             </if>
-            <if test="maintainGroupId != null">
+            <if test="maintainGroupId != null and maintainGroupId != ''">
                 AND maintain_group_id = #{maintainGroupId,jdbcType=VARCHAR}
             </if>
-            <if test="repairCompanyId != null">
+            <if test="repairCompanyId != null and repairCompanyId != ''">
                 AND repair_company_id = #{repairCompanyId,jdbcType=VARCHAR}
             </if>
-            <if test="repairGroupId != null">
+            <if test="repairGroupId != null and repairGroupId != ''">
                 AND repair_group_id = #{repairGroupId,jdbcType=VARCHAR}
             </if>
-            <if test="rescuePhone != null">
+            <if test="rescuePhone != null and rescuePhone != ''">
                 AND rescue_phone = #{rescuePhone,jdbcType=VARCHAR}
             </if>
-            <if test="rescueId != null">
+            <if test="rescueId != null and rescueId != ''">
                 AND rescue_id = #{rescueId,jdbcType=VARCHAR}
             </if>
-            <if test="reformCompany != null">
+            <if test="reformCompany != null and reformCompany != ''">
                 AND reform_company = #{reformCompany,jdbcType=VARCHAR}
             </if>
-            <if test="agent != null">
+            <if test="agent != null and agent != ''">
                 AND agent = #{agent,jdbcType=VARCHAR}
             </if>
-            <if test="type != null">
+            <if test="type != null and type != ''">
                 AND type = #{type,jdbcType=VARCHAR}
             </if>
             <if test="ratedSpeed != null">
                 AND rated_speed = #{ratedSpeed,jdbcType=VARCHAR}
             </if>
-            <if test="doorNumber != null">
+            <if test="doorNumber != null and doorNumber != ''">
                 AND door_number = #{doorNumber,jdbcType=VARCHAR}
             </if>
             <if test="annualInspectionDate != null">
@@ -196,20 +193,23 @@
             <if test="reformDate != null">
                 AND reform_date = #{reformDate,jdbcType=TIMESTAMP}
             </if>
-            <if test="maintainCompanyId != null">
+            <if test="maintainCompanyId != null and maintainCompanyId != ''">
                 AND maintain_company_id = #{maintainCompanyId,jdbcType=VARCHAR}
             </if>
-            <if test="maintainCompanyName != null">
+            <if test="maintainCompanyName != null and maintainCompanyName != ''">
                 AND maintain_company_name = #{maintainCompanyName,jdbcType=VARCHAR}
             </if>
-            <if test="maintainGroupName != null">
+            <if test="maintainGroupName != null and maintainGroupName != ''">
                 AND maintain_group_name = #{maintainGroupName,jdbcType=VARCHAR}
             </if>
-            <if test="repairCompanyName != null">
+            <if test="repairCompanyName != null and repairCompanyName != ''">
                 AND repair_company_name = #{repairCompanyName,jdbcType=VARCHAR}
             </if>
-            <if test="repairGroupName != null">
+            <if test="repairGroupName != null and repairGroupName != ''">
                 AND repair_group_name = #{repairGroupName,jdbcType=VARCHAR}
+            </if>
+            <if test="regionId != null and regionId != ''">
+                AND e.region_id = #{regionId,jdbcType=VARCHAR}
             </if>
             <if test="provinceId != null and provinceId != ''">
                 AND province_id = #{provinceId,jdbcType=VARCHAR}
@@ -590,7 +590,7 @@
     <select id="getElevatorByElevatorId" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from elevator
+        from elevator AS e
         where
         elevator_id = #{elevatorId,jdbcType=VARCHAR}
     </select>

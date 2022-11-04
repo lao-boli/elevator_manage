@@ -12,20 +12,26 @@
         <result property="companyName" column="company_name" jdbcType="VARCHAR"/>
         <result property="groupId" column="group_id" jdbcType="VARCHAR"/>
         <result property="groupName" column="group_name" jdbcType="VARCHAR"/>
+        <result property="receiveTime" column="receive_time" jdbcType="TIMESTAMP"/>
         <result property="trapTime" column="trap_time" jdbcType="TIMESTAMP"/>
         <result property="arriveTime" column="arrive_time" jdbcType="TIMESTAMP"/>
         <result property="finishTime" column="finish_time" jdbcType="TIMESTAMP"/>
         <result property="duration" column="duration" jdbcType="INTEGER"/>
         <result property="misreport" column="is_misreport" jdbcType="BOOLEAN"/>
         <result property="state" column="state" jdbcType="INTEGER"/>
+        <result property="elevatorName" column="elevator_name" jdbcType="VARCHAR"/>
+        <result property="registrationCode" column="registration_code" jdbcType="INTEGER"/>
+        <result property="installPosition" column="install_position" jdbcType="INTEGER"/>
+        <result property="unitName" column="unit_name" jdbcType="VARCHAR"/>
     </resultMap>
     
     <sql id="Base_Column_List">
-        t.id, t.order_id, t.elevator_id, t.terminal_id, t.reporter_id, t.company_id, t.company_name, t.group_id, t.group_name, t.trap_time, t.arrive_time, t.finish_time, t.duration, t.is_misreport, t.state
+        t.id, t.order_id, t.elevator_id, t.terminal_id, t.reporter_id, t.company_id, t.company_name, t.group_id, t.group_name, t.trap_time, t.receive_time, t.arrive_time, t.finish_time, t.duration, t.is_misreport, t.state
     </sql>
 
     <sql id="Ext_Column_List">
-        ,e.name AS elevator_name
+        ,e.name AS elevator_name,e.registration_code,e.install_position
+        ,u.name AS unit_name
     </sql>
 
     <select id="listTrapOrders" resultMap="BaseResultMap">
@@ -34,6 +40,8 @@
         <include refid="Ext_Column_List"/>
         FROM trap_order AS t
         JOIN elevator AS e ON e.elevator_id = t.elevator_id
+        JOIN unit u ON e.unit_id = u.unit_id
+        JOIN region r ON r.region_id = e.region_id
         <where>
             <if test="id != null">
                 AND t.id = #{id,jdbcType=INTEGER}
@@ -62,12 +70,26 @@
             <if test="groupName != null">
                 AND group_name = #{groupName,jdbcType=VARCHAR}
             </if>
+            <if test="createTime != null">
+                AND create_time = #{createTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="createStartTime != null and createEndTime != null">
+                AND create_time &gt; #{createStartTime,jdbcType=TIMESTAMP}
+                AND create_time &lt; #{createEndTime,jdbcType=TIMESTAMP}
+            </if>
             <if test="trapTime != null">
                 AND trap_time = #{trapTime,jdbcType=TIMESTAMP}
             </if>
             <if test="trapStartTime != null and trapEndTime != null">
                 AND trap_time &gt; #{trapStartTime,jdbcType=TIMESTAMP}
                 AND trap_time &lt; #{trapEndTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="receiveTime != null">
+                AND receive_time = #{receiveTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="receiveStartTime != null and receiveEndTime != null">
+                AND receive_time &gt; #{receiveStartTime,jdbcType=TIMESTAMP}
+                AND receive_time &lt; #{receiveEndTime,jdbcType=TIMESTAMP}
             </if>
             <if test="arriveTime != null">
                 AND arrive_time = #{arriveTime,jdbcType=TIMESTAMP}
@@ -92,6 +114,18 @@
             <if test="state != null">
                 AND t.state = #{state,jdbcType=INTEGER}
             </if>
+            <if test="provinceId != null and provinceId != ''">
+                AND province_id = #{provinceId,jdbcType=VARCHAR}
+            </if>
+            <if test="cityId != null and cityId != ''">
+                AND city_id = #{cityId,jdbcType=VARCHAR}
+            </if>
+            <if test="districtId != null and districtId != ''">
+                AND district_id = #{districtId,jdbcType=VARCHAR}
+            </if>
+            <if test="townId != null and townId !=''">
+                AND town_id = #{townId,jdbcType=VARCHAR}
+            </if>
         </where>
     </select>
 
@@ -107,7 +141,9 @@
             <if test="companyName != null">company_name,</if>
             <if test="groupId != null">group_id,</if>
             <if test="groupName != null">group_name,</if>
+            <if test="createTime != null">create_time,</if>
             <if test="trapTime != null">trap_time,</if>
+            <if test="receiveTime != null">receive_time,</if>
             <if test="arriveTime != null">arrive_time,</if>
             <if test="finishTime != null">finish_time,</if>
             <if test="duration != null">duration,</if>
@@ -146,6 +182,9 @@
            <if test="trapTime != null">
                #{trapTime,jdbcType=TIMESTAMP},
            </if>
+            <if test="receiveTime != null">
+                #{receiveTime,jdbcType=TIMESTAMP},
+            </if>
            <if test="arriveTime != null">
                #{arriveTime,jdbcType=TIMESTAMP},
            </if>
@@ -193,6 +232,9 @@
             </if>
             <if test="trapTime != null">
                 trap_time = #{trapTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="receiveTime != null">
+                receive_time = #{receiveTime,jdbcType=TIMESTAMP},
             </if>
             <if test="arriveTime != null">
                 arrive_time = #{arriveTime,jdbcType=TIMESTAMP},

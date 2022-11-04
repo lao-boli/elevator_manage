@@ -1,17 +1,13 @@
 package org.hqu.elevatorManage.domain.dto;
 
-import java.time.LocalDateTime;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 import org.hibernate.validator.constraints.Length;
-import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.io.Serializable;
-
-import lombok.Data;
+import java.time.LocalDateTime;
 
 /**
  * [TrapOrder]DTO
@@ -79,13 +75,27 @@ public class TrapOrderDTO implements Serializable {
      */
     @ApiModelProperty("维保班组名称(查询冗余)")
     private String groupName;
-    
+
+    /**
+     * 工单创建时间
+     */
+    @ApiModelProperty("工单创建时间")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private LocalDateTime createTime;
+
     /**
      * 困人时间
      */
     @ApiModelProperty("困人时间")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private LocalDateTime trapTime;
+
+    /**
+     * 领取时间
+     */
+    @ApiModelProperty("领取时间")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private LocalDateTime receiveTime;
 
     /**
      * 工作人员到达时间
@@ -120,6 +130,21 @@ public class TrapOrderDTO implements Serializable {
     private Integer state;
 
     // for query
+
+    /**
+     * 工单创建时间区间开始
+     */
+    @ApiModelProperty("工单创建时间区间开始")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private LocalDateTime createStartTime;
+
+    /**
+     * 工单创建时间区间结束
+     */
+    @ApiModelProperty("工单创建时间区间结束")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private LocalDateTime createEndTime;
+
     /**
      * 困人时间区间开始
      */
@@ -133,6 +158,19 @@ public class TrapOrderDTO implements Serializable {
     @ApiModelProperty("困人时间区间结束")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private LocalDateTime trapEndTime;
+    /**
+     * 领取时间区间开始
+     */
+    @ApiModelProperty("领取时间区间开始")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private LocalDateTime receiveStartTime;
+
+    /**
+     * 领取时间区间结束
+     */
+    @ApiModelProperty("领取时间区间结束")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private LocalDateTime receiveEndTime;
 
 
     /**
@@ -163,5 +201,29 @@ public class TrapOrderDTO implements Serializable {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private LocalDateTime finishEndTime;
 
+    // for query
+    /**
+     * 省行政区划编号
+     */
+    @ApiModelProperty("省行政区划编号")
+    private String provinceId;
+
+    /**
+     * 市行政区划编号
+     */
+    @ApiModelProperty("市行政区划编号")
+    private String cityId;
+
+    /**
+     * 区/县行政区划编号
+     */
+    @ApiModelProperty("区/县行政区划编号")
+    private String districtId;
+
+    /**
+     * 乡/镇/街道行政区划编号
+     */
+    @ApiModelProperty("乡/镇/街道行政区划编号")
+    private String townId;
 }
 

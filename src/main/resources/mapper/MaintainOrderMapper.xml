@@ -24,6 +24,7 @@
         <result property="state" column="state" jdbcType="INTEGER"/>
         <result property="received" column="is_received" jdbcType="BOOLEAN"/>
         <result property="remark" column="remark" jdbcType="VARCHAR"/>
+        <result property="unitName" column="unit_name" jdbcType="VARCHAR"/>
     </resultMap>
     
     <sql id="Base_Column_List">
@@ -32,6 +33,7 @@
 
     <sql id="Ext_Column_List">
         ,e.name AS elevator_name,e.registration_code,e.install_position
+        ,u.name AS unit_name
     </sql>
 
     <select id="listMaintainOrders" resultMap="BaseResultMap">
@@ -40,6 +42,8 @@
         <include refid="Ext_Column_List"/>
         FROM maintain_order AS mo
         JOIN elevator AS e ON e.elevator_id = mo.elevator_id
+        JOIN region AS r ON e.region_id = r.region_id
+        JOIN unit u ON e.unit_id = u.unit_id
         <where>
             <if test="id != null">
                 AND mo.id = #{id,jdbcType=INTEGER}
@@ -106,6 +110,18 @@
             </if>
             <if test="remark != null">
                 AND remark = #{remark,jdbcType=VARCHAR}
+            </if>
+            <if test="provinceId != null">
+                AND province_id = #{provinceId,jdbcType=VARCHAR}
+            </if>
+            <if test="cityId != null">
+                AND city_id = #{cityId,jdbcType=VARCHAR}
+            </if>
+            <if test="districtId != null">
+                AND district_id = #{districtId,jdbcType=VARCHAR}
+            </if>
+            <if test="townId != null">
+                AND town_id = #{townId,jdbcType=VARCHAR}
             </if>
         </where>
     </select>

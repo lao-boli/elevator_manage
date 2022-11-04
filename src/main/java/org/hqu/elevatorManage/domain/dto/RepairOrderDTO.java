@@ -1,17 +1,13 @@
 package org.hqu.elevatorManage.domain.dto;
 
-import java.time.LocalDateTime;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 import org.hibernate.validator.constraints.Length;
-import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.io.Serializable;
-
-import lombok.Data;
+import java.time.LocalDateTime;
 
 /**
  * [RepairOrder]DTO
@@ -97,7 +93,14 @@ public class RepairOrderDTO implements Serializable {
      */
     @ApiModelProperty("故障类型")
     private String type;
-    
+
+    /**
+     * 工单创建时间
+     */
+    @ApiModelProperty("工单创建时间")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private LocalDateTime createTime;
+
     /**
      * 维修时间
      */
@@ -132,6 +135,20 @@ public class RepairOrderDTO implements Serializable {
 
     // for query
     /**
+     * 工单创建时间区间开始
+     */
+    @ApiModelProperty("工单创建时间区间开始")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private LocalDateTime createStartTime;
+
+    /**
+     * 工单创建时间区间结束
+     */
+    @ApiModelProperty("工单创建时间区间结束")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private LocalDateTime createEndTime;
+
+    /**
      * 维修时间区间开始
      */
     @ApiModelProperty("维修时间区间开始")
@@ -159,5 +176,29 @@ public class RepairOrderDTO implements Serializable {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private LocalDateTime confirmEndTime;
 
+    // for query
+    /**
+     * 省行政区划编号
+     */
+    @ApiModelProperty("省行政区划编号")
+    private String provinceId;
+
+    /**
+     * 市行政区划编号
+     */
+    @ApiModelProperty("市行政区划编号")
+    private String cityId;
+
+    /**
+     * 区/县行政区划编号
+     */
+    @ApiModelProperty("区/县行政区划编号")
+    private String districtId;
+
+    /**
+     * 乡/镇/街道行政区划编号
+     */
+    @ApiModelProperty("乡/镇/街道行政区划编号")
+    private String townId;
 }
 

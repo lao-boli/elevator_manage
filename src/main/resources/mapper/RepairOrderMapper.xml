@@ -6,7 +6,7 @@
         <result property="id" column="id" jdbcType="INTEGER"/>
         <result property="orderId" column="order_id" jdbcType="VARCHAR"/>
         <result property="elevatorId" column="elevator_id" jdbcType="VARCHAR"/>
-        <result property="elevatorName" column="elevator_id" jdbcType="VARCHAR"/>
+        <result property="elevatorName" column="elevator_name" jdbcType="VARCHAR"/>
         <result property="registrationCode" column="registration_code" jdbcType="INTEGER"/>
         <result property="installPosition" column="install_position" jdbcType="INTEGER"/>
         <result property="terminalId" column="terminal_id" jdbcType="VARCHAR"/>
@@ -18,19 +18,22 @@
         <result property="description" column="description" jdbcType="VARCHAR"/>
         <result property="reason" column="reason" jdbcType="VARCHAR"/>
         <result property="type" column="type" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
         <result property="repairTime" column="repair_time" jdbcType="TIMESTAMP"/>
         <result property="confirmTime" column="confirm_time" jdbcType="TIMESTAMP"/>
         <result property="remark" column="remark" jdbcType="VARCHAR"/>
         <result property="state" column="state" jdbcType="INTEGER"/>
         <result property="misreport" column="is_misreport" jdbcType="BOOLEAN"/>
+        <result property="unitName" column="unit_name" jdbcType="VARCHAR"/>
     </resultMap>
     
     <sql id="Base_Column_List">
-        ro.id, ro.order_id, ro.elevator_id, ro.terminal_id, ro.reporter_id, ro.company_id, ro.company_name, ro.group_id, ro.group_name, ro.description, ro.reason, ro.type, ro.repair_time, ro.confirm_time, ro.remark, ro.state, ro.is_misreport
+        ro.id, ro.order_id, ro.elevator_id, ro.terminal_id, ro.reporter_id, ro.company_id, ro.company_name, ro.group_id, ro.group_name, ro.description, ro.reason, ro.type, ro.create_time, ro.repair_time, ro.confirm_time, ro.remark, ro.state, ro.is_misreport
     </sql>
 
     <sql id="Ext_Column_List">
         ,e.name AS elevator_name,e.registration_code,e.install_position
+        ,u.name AS unit_name
     </sql>
 
     <select id="listRepairOrders" resultMap="BaseResultMap">
@@ -39,6 +42,8 @@
         <include refid="Ext_Column_List"/>
         FROM repair_order AS ro
         JOIN elevator AS e ON e.elevator_id = ro.elevator_id
+        JOIN unit u ON e.unit_id = u.unit_id
+        JOIN region r ON r.region_id = e.region_id
         <where>
             <if test="id != null">
                 AND ro.id = #{id,jdbcType=INTEGER}
@@ -76,6 +81,13 @@
             <if test="type != null">
                 AND ro.type = #{type,jdbcType=VARCHAR}
             </if>
+            <if test="createTime != null">
+                AND create_time = #{createTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="createStartTime != null and createEndTime != null">
+                AND create_time &gt; #{createStartTime,jdbcType=TIMESTAMP}
+                AND create_time &lt; #{createEndTime,jdbcType=TIMESTAMP}
+            </if>
             <if test="repairTime != null">
                 AND repair_time = #{repairTime,jdbcType=TIMESTAMP}
             </if>
@@ -99,6 +111,18 @@
             <if test="misreport != null">
                 AND is_misreport = #{misreport,jdbcType=BOOLEAN}
             </if>
+            <if test="provinceId != null and provinceId != ''">
+                AND province_id = #{provinceId,jdbcType=VARCHAR}
+            </if>
+            <if test="cityId != null and cityId != ''">
+                AND city_id = #{cityId,jdbcType=VARCHAR}
+            </if>
+            <if test="districtId != null and districtId != ''">
+                AND district_id = #{districtId,jdbcType=VARCHAR}
+            </if>
+            <if test="townId != null and townId !=''">
+                AND town_id = #{townId,jdbcType=VARCHAR}
+            </if>
         </where>
     </select>
 
@@ -117,6 +141,7 @@
             <if test="description != null">description,</if>
             <if test="reason != null">reason,</if>
             <if test="type != null">type,</if>
+            <if test="createTime != null">create_time,</if>
             <if test="repairTime != null">repair_time,</if>
             <if test="confirmTime != null">confirm_time,</if>
             <if test="remark != null">remark,</if>
@@ -161,6 +186,9 @@
            <if test="type != null">
                #{type,jdbcType=VARCHAR},
            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
            <if test="repairTime != null">
                #{repairTime,jdbcType=TIMESTAMP},
            </if>

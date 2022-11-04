@@ -17,25 +17,35 @@
         <result property="confirmTime" column="confirm_time" jdbcType="TIMESTAMP"/>
         <result property="state" column="state" jdbcType="INTEGER"/>
         <result property="remark" column="remark" jdbcType="VARCHAR"/>
+        <result property="registrationCode" column="registration_code" jdbcType="INTEGER"/>
+        <result property="installPosition" column="install_position" jdbcType="INTEGER"/>
+        <result property="unitName" column="unit_name" jdbcType="VARCHAR"/>
     </resultMap>
     
     <sql id="Base_Column_List">
-        id, order_id, elevator_id, company_id, company_name, group_id, group_name, type, create_time, inspection_time, finish_time, confirm_time, state, remark        
+        aio.id, order_id, aio.elevator_id, company_id, company_name, group_id, group_name, aio.type, create_time, inspection_time, finish_time, confirm_time, aio.state, remark
     </sql>
-    
+    <sql id="Ext_Column_List">
+        ,e.name AS elevator_name,e.registration_code,e.install_position
+        ,u.name AS unit_name
+    </sql>
     <select id="listAnnualInspectionOrders" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List"/>
-        FROM annual_inspection_order
+        <include refid="Ext_Column_List"/>
+        FROM annual_inspection_order aio
+        JOIN elevator AS e ON e.elevator_id = aio.elevator_id
+        JOIN unit AS u ON e.unit_id = u.unit_id
+        JOIN region AS r ON r.region_id = e.region_id
         <where>
             <if test="id != null">
-                AND id = #{id,jdbcType=INTEGER}
+                AND aio.id = #{id,jdbcType=INTEGER}
             </if>
             <if test="orderId != null">
                 AND order_id = #{orderId,jdbcType=VARCHAR}
             </if>
             <if test="elevatorId != null">
-                AND elevator_id = #{elevatorId,jdbcType=VARCHAR}
+                AND aio.elevator_id = #{elevatorId,jdbcType=VARCHAR}
             </if>
             <if test="companyId != null">
                 AND company_id = #{companyId,jdbcType=VARCHAR}
@@ -50,7 +60,7 @@
                 AND group_name = #{groupName,jdbcType=VARCHAR}
             </if>
             <if test="type != null">
-                AND type = #{type,jdbcType=INTEGER}
+                AND aio.type = #{type,jdbcType=INTEGER}
             </if>
             <if test="createTime != null">
                 AND create_time = #{createTime,jdbcType=TIMESTAMP}
@@ -65,10 +75,38 @@
                 AND confirm_time = #{confirmTime,jdbcType=TIMESTAMP}
             </if>
             <if test="state != null">
-                AND state = #{state,jdbcType=INTEGER}
+                AND aio.state = #{state,jdbcType=INTEGER}
             </if>
             <if test="remark != null">
                 AND remark = #{remark,jdbcType=VARCHAR}
+            </if>
+            <if test="provinceId != null and provinceId != ''">
+                AND province_id = #{provinceId,jdbcType=VARCHAR}
+            </if>
+            <if test="cityId != null and cityId != ''">
+                AND city_id = #{cityId,jdbcType=VARCHAR}
+            </if>
+            <if test="districtId != null and districtId != ''">
+                AND district_id = #{districtId,jdbcType=VARCHAR}
+            </if>
+            <if test="townId != null and townId !=''">
+                AND town_id = #{townId,jdbcType=VARCHAR}
+            </if>
+            <if test="createStartTime != null and createEndTime != null">
+                AND create_time &gt; #{createStartTime,jdbcType=TIMESTAMP}
+                AND create_time &lt; #{createEndTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="inspectionStartTime != null and inspectionEndTime != null">
+                AND inspection_time &gt; #{inspectionStartTime,jdbcType=TIMESTAMP}
+                AND inspection_time &lt; #{inspectionEndTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="confirmStartTime != null and confirmEndTime != null">
+                AND confirm_time &gt; #{confirmStartTime,jdbcType=TIMESTAMP}
+                AND confirm_time &lt; #{confirmEndTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="finishStartTime != null and finishEndTime != null">
+                AND finish_time &gt; #{finishStartTime,jdbcType=TIMESTAMP}
+                AND finish_time &lt; #{finishEndTime,jdbcType=TIMESTAMP}
             </if>
         </where>
     </select>

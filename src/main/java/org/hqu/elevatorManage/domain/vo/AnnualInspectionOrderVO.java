@@ -1,17 +1,15 @@
 package org.hqu.elevatorManage.domain.vo;
 
-import java.time.LocalDateTime;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import org.hibernate.validator.constraints.Length;
-import com.fasterxml.jackson.annotation.JsonFormat;
-
-import java.io.Serializable;
-
 import lombok.Data;
+import org.hibernate.validator.constraints.Length;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * [AnnualInspectionOrder]VO
@@ -115,7 +113,32 @@ public class AnnualInspectionOrderVO implements Serializable {
      */
     @ApiModelProperty("备注")
     private String remark;
-    
+
+    // for show
+    /**
+     * 电梯名称
+     */
+    @ApiModelProperty("电梯名称")
+    private String elevatorName;
+
+    /**
+     * 电梯注册代码
+     */
+    @ApiModelProperty("电梯注册代码")
+    private String registrationCode;
+
+    /**
+     * 电梯安装位置
+     */
+    @ApiModelProperty("电梯安装位置")
+    private String installPosition;
+
+    /**
+     * 电梯所属单位名称
+     */
+    @ApiModelProperty("电梯所属单位名称")
+    private String unitName;
+
 
 }
 

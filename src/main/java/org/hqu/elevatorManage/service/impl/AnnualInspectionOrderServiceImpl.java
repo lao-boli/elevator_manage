@@ -2,24 +2,24 @@ package org.hqu.elevatorManage.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import lombok.extern.slf4j.Slf4j;
 import org.hqu.elevatorManage.common.enums.ResultEnum;
 import org.hqu.elevatorManage.common.exception.DAOException;
 import org.hqu.elevatorManage.common.exception.ResultException;
-import org.hqu.elevatorManage.domain.entity.AnnualInspectionOrder;
 import org.hqu.elevatorManage.domain.dto.AnnualInspectionOrderDTO;
-import org.hqu.elevatorManage.domain.vo.AnnualInspectionOrderVO;
 import org.hqu.elevatorManage.domain.dto.PageDTO;
-import org.hqu.elevatorManage.service.AnnualInspectionOrderService;
+import org.hqu.elevatorManage.domain.entity.AnnualInspectionOrder;
+import org.hqu.elevatorManage.domain.vo.AnnualInspectionOrderVO;
 import org.hqu.elevatorManage.mapper.AnnualInspectionOrderMapper;
+import org.hqu.elevatorManage.service.AnnualInspectionOrderService;
 import org.hqu.elevatorManage.service.impl.constant.MapperConst;
-import lombok.extern.slf4j.Slf4j;
-
 import org.hqu.elevatorManage.utils.DAOUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -67,6 +67,7 @@ public class AnnualInspectionOrderServiceImpl implements AnnualInspectionOrderSe
         BeanUtils.copyProperties(annualInspectionOrderDTO, annualInspectionOrder);
 
         annualInspectionOrder.setOrderId(DAOUtil.generatePrimaryKey("AI"));
+        annualInspectionOrder.setCreateTime(LocalDateTime.now());
 
         int status;
         try {

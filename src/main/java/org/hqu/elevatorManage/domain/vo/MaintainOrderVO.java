@@ -1,17 +1,13 @@
 package org.hqu.elevatorManage.domain.vo;
 
-import java.time.LocalDateTime;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import org.hibernate.validator.constraints.Length;
-import com.fasterxml.jackson.annotation.JsonFormat;
-
-import java.io.Serializable;
-
 import lombok.Data;
+
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * [MaintainOrder]VO
@@ -155,7 +151,13 @@ public class MaintainOrderVO implements Serializable {
      */
     @ApiModelProperty("备注")
     private String remark;
-    
+
+    /**
+     * 所属单位名称
+     */
+    @ApiModelProperty("所属单位名称")
+    private String unitName;
+
 
 }
 

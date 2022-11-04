@@ -2,24 +2,24 @@ package org.hqu.elevatorManage.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import lombok.extern.slf4j.Slf4j;
 import org.hqu.elevatorManage.common.enums.ResultEnum;
 import org.hqu.elevatorManage.common.exception.DAOException;
 import org.hqu.elevatorManage.common.exception.ResultException;
-import org.hqu.elevatorManage.domain.entity.RepairOrder;
-import org.hqu.elevatorManage.domain.dto.RepairOrderDTO;
-import org.hqu.elevatorManage.domain.vo.RepairOrderVO;
 import org.hqu.elevatorManage.domain.dto.PageDTO;
-import org.hqu.elevatorManage.service.RepairOrderService;
+import org.hqu.elevatorManage.domain.dto.RepairOrderDTO;
+import org.hqu.elevatorManage.domain.entity.RepairOrder;
+import org.hqu.elevatorManage.domain.vo.RepairOrderVO;
 import org.hqu.elevatorManage.mapper.RepairOrderMapper;
+import org.hqu.elevatorManage.service.RepairOrderService;
 import org.hqu.elevatorManage.service.impl.constant.MapperConst;
-import lombok.extern.slf4j.Slf4j;
-
 import org.hqu.elevatorManage.utils.DAOUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -67,6 +67,7 @@ public class RepairOrderServiceImpl implements RepairOrderService {
         BeanUtils.copyProperties(repairOrderDTO, repairOrder);
 
         repairOrder.setOrderId(DAOUtil.generatePrimaryKey("R"));
+        repairOrder.setCreateTime(LocalDateTime.now());
 
         int status;
         try {
